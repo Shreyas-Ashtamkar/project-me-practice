@@ -1,0 +1,501 @@
+ID,Group,Step,Domain,Project Idea,Description,Weeks
+1,I,1,IOT,Air Quality Pocket Node,PM2.5/PM10 sensing with cheap sensor,1
+2,I,2,Web,Air Quality Web Panel,Live charts + thresholds,1
+3,I,3,Automation,Pollution Alert Bot,Notify when AQI crosses limit,1
+4,I,4,Mobile,Air Exposure Diary,Manual + sensor-based logging,1
+5,I,5,System,Sensor Data Retention Policy,Auto-rollups + pruning,1
+6,II,1,IOT,Water Flow Pulse Counter,Measure pipe flow via pulses,1
+7,II,2,Web,Water Usage Dashboard,Daily/weekly analytics,1
+8,II,3,Automation,Leak Anomaly Detector,Detect abnormal continuous flow,1
+9,II,4,Mobile,Water Budget App,Personal limits + alerts,1
+10,II,5,System,Edge Buffering Service,Offline-first ingestion,1
+11,III,1,IOT,Room Presence Beacon,BLE presence detection,1
+12,III,2,Web,Presence Heatmap UI,Time-based room usage,1
+13,III,3,Automation,Auto-Idle Actions,Presence-based triggers,1
+14,III,4,Mobile,Presence Override Switch,Manual control,1
+15,III,5,System,State Consistency Checker,Debounce + reconcile events,1
+16,IV,1,IOT,Ambient Light Sampler,Lux sampling over time,1
+17,IV,2,Web,Circadian Lighting Planner,Schedule suggestions,1
+18,IV,3,Automation,Screen Dimmer Daemon,Ambient-aware dimming,1
+19,IV,4,Mobile,Light Comfort Feedback,User ratings loop,1
+20,IV,5,System,Rule Engine Sandbox,Evaluate light rules safely,1
+21,,,IOT,Mailbox Open Counter,Reed switch mail detection,1
+22,,,IOT,Footstep Counter Mat,Pressure-based counts,1
+23,,,IOT,Desk Vibration Logger,IMU-based micro-movements,1
+24,,,IOT,Cold Chain Monitor,Temp threshold tracking,1
+25,,,IOT,Pet Bowl Refill Sensor,Weight-based refill alert,1
+26,,,IOT,Window Sun Exposure Meter,Light duration tracking,1
+27,,,IOT,Fan Runtime Tracker,Relay-based runtime stats,1
+28,,,IOT,Indoor CO2 Meter,CO2 ppm logging,1
+29,,,IOT,Key Rack Presence Sensor,Lost-key detection,1
+30,,,IOT,Noise Spike Detector,Event-based sound alerts,1
+31,,,Web,Personal SLA Tracker,Track promises vs delivery,1
+32,,,Web,Micro-Journal App,One-line daily logs,1
+33,,,Web,Reading Queue Manager,Articles with decay priority,1
+34,,,Web,Decision Logbook,Record decisions + outcomes,1
+35,,,Web,Focus Session Board,Shared silent workroom,1
+36,,,Web,Skill Practice Tracker,Deliberate practice logs,1
+37,,,Web,Home Inventory Lite,Minimal asset registry,1
+38,,,Web,Timeboxing Planner,Calendar with limits,1
+39,,,Web,Context Switch Counter,Manual tagging of switches,1
+40,,,Web,Goal Drift Visualizer,Planned vs actual progress,1
+41,,,Mobile,Offline Expense Snapper,Photo + quick entry,1
+42,,,Mobile,Commute Mood Logger,Trip-based mood tagging,1
+43,,,Mobile,Quick Voice Reminders,Lockscreen capture,1
+44,,,Mobile,Notification Snoozer,Rule-based quiet hours,1
+45,,,Mobile,Daily Stretch Coach,Timed prompts + gifs,1
+46,,,Automation,Build Failure Triage,Parse CI logs + hints,1
+47,,,Automation,Inbox Aging Monitor,Flag stale threads,1
+48,,,Automation,Auto-Rename Downloads,Heuristic file naming,1
+49,,,Automation,Website Change Watcher,Diff + notify,1
+50,,,Automation,Idle Tab Cleaner,Browser automation cleanup,1
+51,,,Automation,Daily Standup Summarizer,Collect + summarize inputs,1
+52,,,Automation,Error Budget Tracker,Count incidents vs budget,1
+53,,,Automation,Meeting Notes Extractor,Agenda→action items,1
+54,,,Automation,Periodic Health Pings,Service heartbeat checks,1
+55,,,Automation,Queue Backlog Alert,Threshold-based alerts,1
+56,,,System,Local Event Bus,Simple pub/sub daemon,1
+57,,,System,Process Tree Visualizer,Live parent-child view,1
+58,,,System,Syscall Frequency Sampler,Lightweight tracing,1
+59,,,System,Filesystem Hotspot Finder,IO heatmap,1
+60,,,System,User Session Timeline,Login→logout tracing,1
+61,,,System,Service Dependency Graph,Static + runtime links,1
+62,,,System,Resource Spike Replayer,Replay captured spikes,1
+63,,,System,Config Drift Detector,Compare desired vs live,1
+64,,,System,Port Usage Sentinel,Unexpected open ports,1
+65,,,System,Local Rate Limiter,Token bucket service,1
+66,,,CV,Desk Clutter Index,Object count heuristic,1
+67,,,CV,Whiteboard Text Cleaner,Enhance faint markers,1
+68,,,CV,Receipt Line Extractor,Key-value extraction,1
+69,,,CV,Book Spine Reader,Title detection on shelf,1
+70,,,CV,Face Glare Detector,Lighting quality check,1
+71,,,CV,Handwritten Todo Digitizer,Photo to checklist,1
+72,,,CV,Room Occupancy Estimator,Single-camera count,1
+73,,,CV,Screen Time via Webcam,On-screen presence,1
+74,,,CV,Package Damage Detector,Visual anomaly spotting,1
+75,,,CV,Plant Health Visual Check,Leaf color analysis,1
+76,,,Hybrid,Quiet Hours Controller,Mobile + system rules,1
+77,,,Hybrid,Smart Break Timer,IOT button + app,1
+78,,,Hybrid,Desk Availability Sign,Sensor + web badge,1
+79,,,Hybrid,Meeting Room Light Cue,Calendar + IOT,1
+80,,,Hybrid,Study Sprint Launcher,One-tap multi-actions,1
+81,,,Hybrid,Home Arrival Routine,GPS + IOT triggers,1
+82,,,Hybrid,Focus Score Dashboard,Signals aggregation,1
+83,,,Hybrid,Appliance Usage Card,QR + usage stats,1
+84,,,Hybrid,Visitor Log Tablet,Camera + form,1
+85,,,Hybrid,Energy Saving Challenge,Household gamification,1
+86,,,Fun,Random Skill Drill,Daily micro-challenges,1
+87,,,Fun,Personal Trivia Generator,From your data,1
+88,,,Fun,Ambient Sound Mixer,Context-aware loops,1
+89,,,Fun,Daily Curiosity Feed,One strange fact/day,1
+90,,,Fun,Mini Habit Lottery,Weighted random habits,1
+91,,,Fun,Reflection Prompt Wheel,Spin-to-prompt,1
+92,,,Fun,Memory Lane Notifier,Past logs resurfaced,1
+93,,,Fun,Time Perception Test,Estimate vs actual,1
+94,,,Fun,Decision Fatigue Meter,Choice counting,1
+95,,,Fun,Personal Myth Builder,Turn weeks into stories,1
+96,,,Automation,Calendar Conflict Detector,Overlap + priority rules,1
+97,,,System,Local Feature Flag Service,Toggle behaviors live,1
+98,,,Web,Personal API Playground,Test endpoints safely,1
+99,,,IOT,Button-Based Panic Signal,One-press alert,1
+100,,,CV,Workspace Ergonomics Snapshot,Posture + layout score,1
+101,V,1,IOT,Humidity Drift Logger,Track slow humidity changes over days,1
+102,V,2,Web,Humidity Comfort Dashboard,Visual comfort bands,1
+103,V,3,Automation,Dehumidifier Advisory,Notify optimal usage windows,1
+104,V,4,Mobile,Manual Comfort Feedback,User comfort ratings,1
+105,V,5,System,Sensor Calibration Tracker,Track sensor drift over time,1
+106,VI,1,IOT,Fridge Item Weight Tracker,Shelf-level weight sensing,1
+107,VI,2,Web,Food Consumption Timeline,Visualize usage patterns,1
+108,VI,3,Automation,Expiry Risk Predictor,Usage vs expiry alerts,1
+109,VI,4,Mobile,Quick Fridge Scan App,Manual confirmation UI,1
+110,VI,5,System,Edge Event Deduplicator,Prevent double counts,1
+111,VII,1,IOT,Doorway Direction Counter,IN/OUT detection via IR,1
+112,VII,2,Web,Footfall Analytics Page,Hourly trends,1
+113,VII,3,Automation,Peak Time Notifier,Notify congestion windows,1
+114,VII,4,Mobile,Manual Override Counter,Correct miscounts,1
+115,VII,5,System,Temporal Smoothing Engine,Noise reduction logic,1
+116,VIII,1,IOT,Desk Temperature Gradient,Multi-point temp sensing,1
+117,VIII,2,Web,Heat Map Visualizer,Spatial heat view,1
+118,VIII,3,Automation,Fan Advisory Engine,Suggest airflow changes,1
+119,VIII,4,Mobile,Comfort Toggle App,User preference switch,1
+120,VIII,5,System,Spatial Interpolation Module,Estimate missing points,1
+121,,,IOT,Drawer Open Frequency Logger,Track usage habits,1
+122,,,IOT,Chair Occupancy Timer,Sit duration tracking,1
+123,,,IOT,Stair Usage Counter,Step detection,1
+124,,,IOT,Indoor UV Exposure Meter,Window UV estimation,1
+125,,,IOT,Power Socket Usage Logger,Plug-level usage stats,1
+126,,,IOT,Water Filter Life Monitor,Flow-based life estimate,1
+127,,,IOT,Helmet Wear Detector,Contact-based safety check,1
+128,,,IOT,Bike Parking Presence Node,Spot occupancy detection,1
+129,,,IOT,Tool Usage Tracker,Detect power tool usage,1
+130,,,IOT,Indoor Wind Draft Sensor,Airflow micro-changes,1
+131,,,Web,Personal Risk Register,Track personal risks,1
+132,,,Web,Learning Backlog Manager,Concept queue + decay,1
+133,,,Web,Daily Time Leak Logger,Manual leak tagging,1
+134,,,Web,Meeting Effectiveness Rater,Post-meeting scoring,1
+135,,,Web,Idea Parking Lot,Deferred idea capture,1
+136,,,Web,Personal OKR Tracker,Objectives vs key results,1
+137,,,Web,Skill Decay Visualizer,Time since last practice,1
+138,,,Web,Energy Level Journal,Subjective energy logs,1
+139,,,Web,Task Interruption Map,Interrupt source tracking,1
+140,,,Web,Weekly Review Generator,Auto review template,1
+141,,,Mobile,Micro-Nap Timer,Short sleep guardrails,1
+142,,,Mobile,Contextual Reminder App,Location + time rules,1
+143,,,Mobile,Quick Decision Notepad,Fast pros/cons entry,1
+144,,,Mobile,Ambient Noise Recorder,Background noise samples,1
+145,,,Mobile,One-Handed Mode Logger,Usability experiment,1
+146,,,Automation,Log Rotation Verifier,Ensure policies applied,1
+147,,,Automation,Unattended Process Finder,Detect zombie jobs,1
+148,,,Automation,Stale Config Cleaner,Find unused configs,1
+149,,,Automation,Release Notes Scraper,Collect upstream changes,1
+150,,,Automation,Dependency Update Radar,Watch version bumps,1
+151,,,Automation,Inbox Load Meter,Mail volume trends,1
+152,,,Automation,Build Time Regression Alert,Detect slowdowns,1
+153,,,Automation,File Permission Auditor,Detect risky perms,1
+154,,,Automation,Idle Service Shutdown,Stop unused services,1
+155,,,Automation,API Latency Watchdog,Endpoint timing alerts,1
+156,,,System,Clock Skew Monitor,Detect time drift,1
+157,,,System,Process Startup Profiler,Measure boot cost,1
+158,,,System,Memory Fragmentation Sampler,Heap behavior insights,1
+159,,,System,Syslog Classification Engine,Auto-tag log lines,1
+160,,,System,Filesystem Aging Analyzer,Cold vs hot files,1
+161,,,System,Thread Contention Tracker,Lock wait stats,1
+162,,,System,Local Secrets Scanner,Find accidental secrets,1
+163,,,System,Background Job Orchestrator,Simple cron replacement,1
+164,,,System,Network Error Taxonomy,Classify failures,1
+165,,,System,Config Change Timeline,Who/when tracking,1
+166,,,CV,Keyboard Usage Heatmap,Key frequency via camera,1
+167,,,CV,Hand Tremor Estimator,Micro-movement detection,1
+168,,,CV,Screen Glare Mapping,Reflection detection,1
+169,,,CV,Notebook Page Indexer,Auto page numbers,1
+170,,,CV,Desk Cable Chaos Score,Messiness estimation,1
+171,,,CV,Water Level Visual Gauge,Camera-based reading,1
+172,,,CV,Foot Posture Analyzer,Standing alignment,1
+173,,,CV,Package Count Estimator,Bulk item counting,1
+174,,,CV,Chair Height Detector,Ergonomic assessment,1
+175,,,CV,Room Bright Spot Finder,Uneven lighting detection,1
+176,,,Hybrid,Arrival Mood Logger,GPS + quick input,1
+177,,,Hybrid,Focus Session Lockdown,System + mobile sync,1
+178,,,Hybrid,Study Group Presence Board,Multi-user status,1
+179,,,Hybrid,Desk Reset Checklist,IOT trigger + app,1
+180,,,Hybrid,Silent Mode Enforcer,Calendar + phone,1
+181,,,Hybrid,Hydration Reminder Button,Physical input + app,1
+182,,,Hybrid,Commute Start Predictor,Pattern-based guess,1
+183,,,Hybrid,Home Exit Checklist,Door sensor + phone,1
+184,,,Hybrid,Visitor WiFi Timebox,QR + timer,1
+185,,,Hybrid,Energy Spike Investigator,Correlate signals,1
+186,,,Fun,Daily Constraint Generator,Random rules for day,1
+187,,,Fun,Personal Curiosity Timer,Track rabbit holes,1
+188,,,Fun,Mini Failure Archive,Log small failures,1
+189,,,Fun,Attention Span Meter,Task duration stats,1
+190,,,Fun,One-Sentence Diary,Ultra-short journaling,1
+191,,,Fun,Weekly Theme Picker,Focus theme selection,1
+192,,,Fun,Personal Lore Timeline,Life events storyline,1
+193,,,Fun,Decision Regret Tracker,Post-decision feelings,1
+194,,,Fun,Time Warp Reminder,Past self messages,1
+195,,,Fun,Productivity Myth Buster,Test common claims,1
+196,,,Automation,Chat Noise Filter,Mute low-signal chats,1
+197,,,System,Local Job Queue Simulator,Priority + fairness,1
+198,,,Web,Personal Schema Registry,Track data contracts,1
+199,,,IOT,Button-Based Context Switch,Manual state toggle,1
+200,,,CV,Workspace Symmetry Checker,Visual balance score,1
+201,IX,1,IOT,Ambient Temperature Noise Sampler,High-frequency temp jitter capture,1
+202,IX,2,System,Signal Smoothing Pipeline,Filter noisy sensor data,1
+203,IX,3,Web,Noise vs Stability Dashboard,Visualize raw vs filtered,1
+204,IX,4,Automation,Anomaly Window Notifier,Alert on instability bursts,1
+205,IX,5,Mobile,Manual Anomaly Tagger,User-confirmed labels,1
+206,X,1,IOT,Desk Drawer Weight Sensor,Detect item removal/addition,1
+207,X,2,Web,Item Movement Timeline,Chronological events view,1
+208,X,3,Automation,Missing Item Alert,Notify prolonged absence,1
+209,X,4,Mobile,Quick Item Check App,Manual confirm/reset,1
+210,X,5,System,Event Correlation Engine,Merge weight+time signals,1
+211,XI,1,IOT,Room Echo Profile Logger,Sound reflection sampling,1
+212,XI,2,Web,Acoustic Signature Viewer,Room echo fingerprints,1
+213,XI,3,Automation,Noise Quality Advisor,Suggest layout changes,1
+214,XI,4,Mobile,Manual Noise Rating,User subjective input,1
+215,XI,5,System,Audio Feature Extractor,FFT-based features,1
+216,XII,1,IOT,Window Draft Detection Node,Temp delta near window,1
+217,XII,2,Web,Draft Heat Loss Dashboard,Estimate energy loss,1
+218,XII,3,Automation,Draft Alert Bot,Notify cold-air events,1
+219,XII,4,Mobile,Comfort Override Switch,Ignore alerts temporarily,1
+220,XII,5,System,Rule Threshold Tuner,Adaptive thresholds,1
+221,,,IOT,Soap Dispenser Usage Counter,Detect handwash events,1
+222,,,IOT,Cupboard Light Trigger,Open-based lighting,1
+223,,,IOT,Keyboard Activity Sensor,Vibration-based typing detect,1
+224,,,IOT,Indoor Barometric Trend Logger,Pressure change tracking,1
+225,,,IOT,Laptop Lid Angle Sensor,Usage posture hints,1
+226,,,IOT,Window Blind Position Tracker,Manual position logging,1
+227,,,IOT,Router Power Cycle Counter,Track outages,1
+228,,,IOT,Indoor Foot Traffic Sensor,Floor vibration sensing,1
+229,,,IOT,Manual Door Lock State Node,Detect locked/unlocked,1
+230,,,IOT,Trash Bag Fill Estimator,Weight progression,1
+231,,,Web,Personal Latency Diary,Perceived wait times,1
+232,,,Web,Contextual Bookmark Manager,Why-saved metadata,1
+233,,,Web,Question Backlog Board,Open questions tracking,1
+234,,,Web,Personal Decision Tree Builder,Map choices graphically,1
+235,,,Web,Learning Session Replay Notes,After-study summaries,1
+236,,,Web,Idea Validation Checklist,Pre-execution sanity checks,1
+237,,,Web,Personal Knowledge Decay Alarm,Unused notes alerts,1
+238,,,Web,Effort Estimation Log,Estimate vs actual,1
+239,,,Web,Weekly Constraint Planner,Limit-based planning,1
+240,,,Web,Personal Tradeoff Matrix,Pros/cons weighted tool,1
+241,,,Mobile,Quick Capture Sketchpad,Low-friction drawing,1
+242,,,Mobile,One-Tap Status Logger,Single-button state log,1
+243,,,Mobile,Focus Disruption Counter,Manual interruption taps,1
+244,,,Mobile,Micro-Exercise Prompt App,Short activity nudges,1
+245,,,Mobile,Offline Route Memory,Save walked paths,1
+246,,,Automation,CLI Output Snapshotter,Periodic command capture,1
+247,,,Automation,Stale Branch Detector,Unused git branches,1
+248,,,Automation,Service Restart Cause Logger,Why restarts happened,1
+249,,,Automation,Unusual Login Time Alert,Odd-hour access detection,1
+250,,,Automation,Email Response Time Stats,Reply latency tracking,1
+251,,,Automation,Recurring Task Drift Detector,Slippage over weeks,1
+252,,,Automation,File Access Pattern Monitor,Hot/cold access logs,1
+253,,,Automation,Config Template Validator,Detect missing fields,1
+254,,,Automation,Chat Response Lag Monitor,Measure reply delays,1
+255,,,Automation,Local API Contract Checker,Schema mismatch detect,1
+256,,,System,Interrupt Storm Monitor,IRQ spike detection,1
+257,,,System,CPU Frequency Scaling Logger,Freq changes over time,1
+258,,,System,Socket Leak Detector,Unclosed connections,1
+259,,,System,Local Feature Usage Meter,Count feature toggles,1
+260,,,System,Process IO Wait Analyzer,Disk wait insights,1
+261,,,System,Crash Signature Clustering,Group similar crashes,1
+262,,,System,Startup Order Visualizer,Dependency boot order,1
+263,,,System,Background Noise CPU Sampler,Idle interference detection,1
+264,,,System,Local Policy Enforcement Daemon,Simple rule enforcement,1
+265,,,System,Time-Sliced Task Simulator,Cooperative scheduling demo,1
+266,,,CV,Desk Shadow Analyzer,Lighting obstruction detection,1
+267,,,CV,Handwriting Pressure Estimator,Stroke darkness analysis,1
+268,,,CV,Screen Reflection Angle Finder,Mirror-like glare angles,1
+269,,,CV,Book Page Curl Detector,Scan quality check,1
+270,,,CV,Footstep Gait Consistency,Walk pattern variance,1
+271,,,CV,Plant Growth Rate Estimator,Leaf area change,1
+272,,,CV,Workspace Color Balance Score,Visual comfort metric,1
+273,,,CV,Paper Stack Thickness Estimator,Edge detection depth,1
+274,,,CV,Chair Back Angle Detector,Posture assessment,1
+275,,,CV,Room Corner Darkness Map,Lighting gaps,1
+276,,,Hybrid,Context-Aware Silent Mode,Sensor + phone logic,1
+277,,,Hybrid,Desk Arrival Ritual Trigger,Presence + app checklist,1
+278,,,Hybrid,Study Session Auto-Logger,Motion + timer,1
+279,,,Hybrid,Home Night Mode Switch,Physical toggle + system,1
+280,,,Hybrid,Leaving Home Energy Check,Sensor + mobile prompt,1
+281,,,Hybrid,Personal Focus State API,Expose current state,1
+282,,,Hybrid,Visitor Presence Countdown,Sensor + display,1
+283,,,Hybrid,Appliance Cooldown Timer,Usage-based lockout,1
+284,,,Hybrid,Daily Shutdown Routine,One-action multi-stop,1
+285,,,Hybrid,Room Comfort Scorecard,Aggregate signals,1
+286,,,Fun,Constraint-Based Todo Picker,Randomized with rules,1
+287,,,Fun,Attention Residue Logger,Task-switch friction notes,1
+288,,,Fun,Daily Friction Hunt,Find one annoyance/day,1
+289,,,Fun,Time Estimation Game,Guess durations,1
+290,,,Fun,Personal Metrics Tarot,Symbolic reflection cards,1
+291,,,Fun,One-Minute Curiosity Sprint,Timed exploration,1
+292,,,Fun,Weekly Surprise Generator,Controlled randomness,1
+293,,,Fun,Micro-Win Collector,Log tiny successes,1
+294,,,Fun,Decision Coin Flip Log,Track outcomes,1
+295,,,Fun,Personal System Bingo,Random maintenance tasks,1
+296,,,Automation,Service Quiet Hour Enforcer,No-restart windows,1
+297,,,System,Local Dependency Version Map,Track linked libs,1
+298,,,Web,Personal Experiment Registry,Track self-experiments,1
+299,,,IOT,Button-Based Mode Cycler,Cycle system states,1
+300,,,CV,Workspace Visual Consistency Check,Layout drift detection,1
+301,XIII,1,IOT,Ambient Vibration Baseline Logger,Long-term vibration baseline capture,1
+302,XIII,2,System,Signal Drift Analyzer,Detect slow baseline shifts,1
+303,XIII,3,Web,Drift Comparison Dashboard,Before vs after views,1
+304,XIII,4,Automation,Drift Alert Scheduler,Notify sustained drift,1
+305,XIII,5,Mobile,Manual Environment Annotation,User notes for drift events,1
+306,XIV,1,IOT,Room Micro-Pressure Sensor,Detect door/window pressure deltas,1
+307,XIV,2,Web,Airflow Event Viewer,Visualize pressure spikes,1
+308,XIV,3,Automation,Airflow Change Notifier,Alert sudden changes,1
+309,XIV,4,Mobile,Manual Vent State Logger,Track vent usage,1
+310,XIV,5,System,Pressure Event Correlator,Merge pressure + time data,1
+311,XV,1,IOT,Desk Surface Temperature Grid,Multi-sensor surface scan,1
+312,XV,2,Web,Thermal Comfort Surface Map,Heat distribution UI,1
+313,XV,3,Automation,Hotspot Advisory Engine,Suggest object repositioning,1
+314,XV,4,Mobile,Comfort Feedback Slider,Subjective input loop,1
+315,XV,5,System,Thermal Interpolation Engine,Estimate missing values,1
+316,,,IOT,Footwear Usage Detector,Detect shoe wear patterns,1
+317,,,IOT,Helmet Storage Presence Node,Detect helmet placed/removed,1
+318,,,IOT,Wall Proximity Sensor,Detect furniture distance changes,1
+319,,,IOT,Indoor Step Cadence Logger,Walking rhythm sensing,1
+320,,,IOT,Manual Light Switch Logger,Track physical toggles,1
+321,,,IOT,Trash Lid Open Duration Tracker,Open-time analytics,1
+322,,,IOT,Router Heat Monitor,Temperature vs load,1
+323,,,IOT,Indoor Static Electricity Detector,Humidity-static correlation,1
+324,,,IOT,Keyboard Tilt Angle Sensor,Ergonomic orientation tracking,1
+325,,,IOT,Window Shade Usage Logger,Manual shade patterns,1
+326,,,Web,Personal Effort Radar,Visualize effort distribution,1
+327,,,Web,Expectation Setting Log,What you told others,1
+328,,,Web,Knowledge Gap Register,Explicit unknowns list,1
+329,,,Web,Context Switching Cost Estimator,Self-reported penalties,1
+330,,,Web,Weekly Energy Budget Planner,Energy as currency,1
+331,,,Web,Personal Heuristic Library,Rules you follow,1
+332,,,Web,Learning Experiment Planner,Design study experiments,1
+333,,,Web,Outcome Prediction Log,Forecast vs result,1
+334,,,Web,Personal Feedback Inbox,Collect self-notes,1
+335,,,Web,Attention Investment Ledger,Where focus went,1
+336,,,Mobile,Single-Thumb UI Tester,Thumb reachability study,1
+337,,,Mobile,Micro-Reflection Timer,Timed thinking windows,1
+338,,,Mobile,Context Switch Warning App,Pre-switch reminder,1
+339,,,Mobile,One-Tap Fatigue Marker,Instant fatigue logging,1
+340,,,Mobile,Offline Observation Notes,Low-friction field notes,1
+341,,,Automation,Service Recovery Time Tracker,MTTR measurement,1
+342,,,Automation,Alert Fatigue Meter,Alert volume vs action,1
+343,,,Automation,Config Change Approval Gate,Manual ack required,1
+344,,,Automation,Command Usage Frequency Logger,Shell history stats,1
+345,,,Automation,Build Artifact Size Monitor,Detect bloat,1
+346,,,Automation,Recurring Failure Signature Finder,Same bug detection,1
+347,,,Automation,Environment Variable Auditor,Detect risky values,1
+348,,,Automation,Task Retry Pattern Analyzer,Manual vs auto retries,1
+349,,,Automation,Local Rate Spike Detector,Request burst alerts,1
+350,,,Automation,Background Task Starvation Alert,Detect long waits,1
+351,,,System,NUMA Imbalance Monitor,Memory locality analysis,1
+352,,,System,Page Cache Efficiency Tracker,Cache hit/miss study,1
+353,,,System,Process Priority Drift Logger,Nice value changes,1
+354,,,System,Kernel Timer Jitter Sampler,Timing precision study,1
+355,,,System,Local IPC Throughput Tester,Pipe vs socket bench,1
+356,,,System,Thread Pool Saturation Monitor,Queue depth tracking,1
+357,,,System,Filesystem Metadata Latency Probe,Stat call timing,1
+358,,,System,User Command Latency Profiler,Per-command delays,1
+359,,,System,Local Auth Attempt Histogram,Login attempt stats,1
+360,,,System,Clock Source Comparison Tool,TSC vs HPET study,1
+361,,,CV,Desk Surface Wear Detector,Scratch pattern analysis,1
+362,,,CV,Hand Grip Symmetry Checker,Left/right balance,1
+363,,,CV,Screen Bezel Intrusion Detector,Obstruction detection,1
+364,,,CV,Book Margin Crop Assistant,Auto margin suggestion,1
+365,,,CV,Eye Blink Rate Estimator,Focus fatigue proxy,1
+366,,,CV,Whiteboard Shadow Suppressor,Shadow removal,1
+367,,,CV,Desk Item Movement Trail,Object path tracking,1
+368,,,CV,Indoor Horizon Tilt Detector,Camera alignment check,1
+369,,,CV,Room Echo Change Detector,Before/after acoustic diff,1
+370,,,CV,Chair Cushion Deformation Tracker,Wear over time,1
+371,,,Hybrid,Context-Aware Do-Not-Disturb,Sensor + phone rules,1
+372,,,Hybrid,Arrival-Based Music Selector,GPS + mood,1
+373,,,Hybrid,Desk Setup Consistency Checker,Camera + checklist,1
+374,,,Hybrid,Study Break Enforcement Button,Physical override,1
+375,,,Hybrid,Home Quiet Score Aggregator,Noise + presence,1
+376,,,Hybrid,Personal Focus Contract,Rules enforced across devices,1
+377,,,Hybrid,Leaving Desk Checklist Light,Visual cue on exit,1
+378,,,Hybrid,Visitor Session Logger,Presence + notes,1
+379,,,Hybrid,Appliance Warm-Up Predictor,Usage history based,1
+380,,,Hybrid,Daily Reset Routine Trigger,End-of-day actions,1
+381,,,Fun,Personal Rule Generator,Random constraints engine,1
+382,,,Fun,Curiosity Debt Tracker,Unanswered questions list,1
+383,,,Fun,Daily Surprise Constraint,One odd rule/day,1
+384,,,Fun,Micro-Annoyance Bingo,Spot frictions game,1
+385,,,Fun,Time Awareness Drill,Random time checks,1
+386,,,Fun,Decision Delay Meter,Hesitation tracking,1
+387,,,Fun,Personal Myth Refactor,Rewrite self-narratives,1
+388,,,Fun,One-Week Theme Archive,Theme history log,1
+389,,,Fun,Constraint Relaxation Timer,When to stop rules,1
+390,,,Fun,Life System Changelog,Track system changes,1
+391,,,Automation,Service Dependency Change Alert,Upstream change notify,1
+392,,,System,Local Policy Simulation Engine,Test rules safely,1
+393,,,Web,Personal Assumption Register,Assumptions list,1
+394,,,IOT,Button-Based Phase Marker,Manual phase change,1
+395,,,CV,Workspace Visual Noise Index,Clutter entropy score,1
+396,,,Web,Attention Budget Planner,Planned vs actual focus,1
+397,,,Automation,Local Cache Effectiveness Monitor,Hit rate alerts,1
+398,,,System,User Idle Pattern Classifier,Idle behavior analysis,1
+399,,,Hybrid,Focus State Broadcast Light,Physical indicator,1
+400,,,Fun,Personal System Stress Test,Simulated bad days,1
+401,XVI,1,IOT,Ambient Electromagnetic Noise Logger,Measure EM fluctuations near desk,1
+402,XVI,2,System,Signal Baseline Normalizer,Normalize long-term EM data,1
+403,XVI,3,Web,EM Noise Trend Dashboard,Visualize daily/weekly patterns,1
+404,XVI,4,Automation,Anomalous EM Spike Alert,Notify unusual spikes,1
+405,XVI,5,Mobile,Manual Interference Tagger,User notes for spike causes,1
+406,XVII,1,IOT,Room Odor Intensity Sensor,Gas sensor for odor levels,1
+407,XVII,2,Web,Odor Event Timeline,Track smell events,1
+408,XVII,3,Automation,Air Refresh Recommendation,Suggest ventilation times,1
+409,XVII,4,Mobile,Manual Smell Feedback,User subjective input,1
+410,XVII,5,System,Sensor Noise Classifier,Distinguish sensor vs real events,1
+411,XVIII,1,IOT,Desk Load Distribution Sensor,Weight spread across desk,1
+412,XVIII,2,Web,Desk Load Visualization,Heatmap of load zones,1
+413,XVIII,3,Automation,Overload Warning Engine,Alert uneven stress,1
+414,XVIII,4,Mobile,Desk Layout Adjuster,Manual layout logging,1
+415,XVIII,5,System,Load Drift Analyzer,Detect gradual imbalance,1
+416,,,IOT,Indoor Magnetic Field Mapper,Map magnetic strength indoors,1
+417,,,IOT,Ceiling Fan Wobble Detector,IMU-based vibration analysis,1
+418,,,IOT,Chair Armrest Usage Logger,Detect pressure usage patterns,1
+419,,,IOT,Window Condensation Detector,Moisture on glass sensing,1
+420,,,IOT,Door Handle Touch Counter,Capacitive touch logging,1
+421,,,IOT,Indoor Air Stagnation Sensor,Low airflow detection,1
+422,,,IOT,Foot Rest Usage Tracker,Pressure-based detection,1
+423,,,IOT,Desk Cable Movement Sensor,Vibration-based tug detection,1
+424,,,IOT,Manual Thermostat Adjustment Logger,Track physical changes,1
+425,,,IOT,Indoor Draft Direction Sensor,Multi-point airflow inference,1
+426,,,Web,Personal Attention Debt Ledger,Unfinished attention commitments,1
+427,,,Web,Decision Reversal Tracker,Changed-mind history,1
+428,,,Web,Effort Recovery Log,Rest after intense work,1
+429,,,Web,Personal Constraint Library,Reusable self-rules,1
+430,,,Web,Outcome Surprise Index,Expected vs actual delta,1
+431,,,Web,Daily Assumption Check,What proved false today,1
+432,,,Web,Skill Transfer Mapper,Map skills across domains,1
+433,,,Web,Personal Trade Study Tool,Compare options quantitatively,1
+434,,,Web,Time-to-Value Journal,How fast value appeared,1
+435,,,Web,Focus Horizon Planner,Near vs far focus split,1
+436,,,Mobile,One-Tap Context Marker,Instant context switch tag,1
+437,,,Mobile,Micro-Recovery Coach,Short reset prompts,1
+438,,,Mobile,Environmental Discomfort Logger,Quick discomfort capture,1
+439,,,Mobile,Offline Idea Capture Pad,Low-latency notes,1
+440,,,Mobile,Attention Reset Timer,Short reset cycles,1
+441,,,Automation,Alert Response Latency Tracker,Time to acknowledge alerts,1
+442,,,Automation,Unused Cron Job Finder,Detect dead schedules,1
+443,,,Automation,Service Flap Detector,Frequent restart spotting,1
+444,,,Automation,Command Alias Collision Checker,Detect shell conflicts,1
+445,,,Automation,Local Dependency Drift Alert,Version mismatch notify,1
+446,,,Automation,Resource Reservation Auditor,Unused reservations,1
+447,,,Automation,Log Silence Detector,Expected logs missing,1
+448,,,Automation,Manual Override Frequency Meter,Human intervention stats,1
+449,,,Automation,Local SLA Breach Logger,Record small breaches,1
+450,,,Automation,Process Backoff Pattern Analyzer,Retry behavior insights,1
+451,,,System,CPU Thermal Throttling Logger,Freq vs temp correlation,1
+452,,,System,Local Memory Pressure Simulator,Stress test paging,1
+453,,,System,File Descriptor Exhaustion Tester,Limit behavior demo,1
+454,,,System,Context Switch Cost Profiler,Kernel/user switch timing,1
+455,,,System,Local Capability Drop Monitor,Privilege loss tracking,1
+456,,,System,IO Scheduler Comparison Tool,CFQ vs others study,1
+457,,,System,Process Exit Reason Classifier,Normal vs crash exits,1
+458,,,System,User Session Overlap Analyzer,Concurrent logins,1
+459,,,System,Local Watchdog Escalation Engine,Multi-level response,1
+460,,,System,Kernel Log Semantic Grouper,Meaning-based clustering,1
+461,,,CV,Desk Reflection Intensity Meter,Specular highlight detection,1
+462,,,CV,Handwriting Slant Analyzer,Writing angle analysis,1
+463,,,CV,Eye Gaze Stability Tracker,Focus steadiness proxy,1
+464,,,CV,Screen Pixel Defect Finder,Dead pixel detection,1
+465,,,CV,Book Spine Wear Estimator,Usage wear patterns,1
+466,,,CV,Workspace Object Alignment Checker,Alignment deviation score,1
+467,,,CV,Chair Position Drift Tracker,Seat movement over time,1
+468,,,CV,Desk Surface Cleanliness Detector,Dust/smudge detection,1
+469,,,CV,Ambient Color Temperature Estimator,Lighting warmth score,1
+470,,,CV,Room Visual Symmetry Drift,Layout change detection,1
+471,,,Hybrid,Context-Aware Work Mode Switch,Sensor + system modes,1
+472,,,Hybrid,Arrival Energy Prompt,GPS + subjective input,1
+473,,,Hybrid,Desk Occupancy Broadcast API,Expose presence state,1
+474,,,Hybrid,Home Shutdown Confirmation Light,Physical confirmation cue,1
+475,,,Hybrid,Visitor Comfort Score,Multi-signal aggregation,1
+476,,,Hybrid,Daily Mode Scheduler,Planned modes by time,1
+477,,,Hybrid,Focus Break Enforcement Lamp,Physical break indicator,1
+478,,,Hybrid,Personal State Timeline,Merge mobile + system states,1
+479,,,Hybrid,Environment Snapshot Button,Capture multi-sensor state,1
+480,,,Hybrid,Leaving Home Readiness Score,Aggregate checklist,1
+481,,,Fun,Personal System Failure Mode Game,Simulate breakdowns,1
+482,,,Fun,Curiosity Saturation Meter,Detect overload,1
+483,,,Fun,Daily Inversion Challenge,Do opposite once,1
+484,,,Fun,Micro-Ritual Generator,Random tiny rituals,1
+485,,,Fun,Attention Drift Bingo,Spot drift causes,1
+486,,,Fun,Decision Speed Drill,Timed decisions,1
+487,,,Fun,Personal System Archetypes,Classify your patterns,1
+488,,,Fun,One-Constraint Week Planner,Single-rule week,1
+489,,,Fun,Maintenance Roulette,Random upkeep tasks,1
+490,,,Fun,Life Signal Noise Map,Meaning vs noise reflection,1
+491,,,Automation,State Change Audit Trail,Track all state flips,1
+492,,,System,Local Fault Injection Harness,Inject failures safely,1
+493,,,Web,Personal Control Surface,One-page life controls,1
+494,,,IOT,Button-Based Emergency Context,Context switch for emergencies,1
+495,,,CV,Workspace Visual Stability Index,Long-term layout stability,1
+496,,,Web,Personal Load Shedding Planner,What to drop under stress,1
+497,,,Automation,Local Saturation Detector,Detect resource saturation,1
+498,,,System,User Perceived Latency Correlator,System vs perception,1
+499,,,Hybrid,Global Focus Kill Switch,One-action everything off,1
+500,,,Fun,Personal Systems Atlas,Map of all built systems,2
