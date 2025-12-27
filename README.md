@@ -1,4 +1,4 @@
-# Practice Me Code 
+# Projects Me Practice
 
 A simple coding practice repository containing various coding problems, without their solutions. The goal is to provide a platform for developers to practice coding problems on their own. This repository is intended to be installed on a private personal server, and this sends a weekly email with a new problem statement. Ideally I will be installing this on my raspberry pi and keeping that running 24/7 to send me weekly problems to solve.
 
