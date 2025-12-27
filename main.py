@@ -53,7 +53,7 @@ html_content = html_template.format_map(
     }
 )
 
-if getenv("DEBUG_MODE", "false").lower() == "false":
+if getenv("DEBUG_MODE", "true").lower() == "false":
     ms = MailerSendClient()
     
     email = (EmailBuilder()
