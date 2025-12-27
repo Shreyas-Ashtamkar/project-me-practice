@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Weekly Project</title>
+</head>
+
+<body style="margin:0;padding:0;background:#ffffff;color:#111111;font-family:Arial,Helvetica,sans-serif;">
+    <div style="max-width:640px;margin:0 auto;padding:24px;">
+        Hi {recipient_name},<br/><br/>
+        Here's your new weekly project:<br/><br/>
+        <!-- Main -->
+        <div style="border:1px solid #eeeeee;border-radius:10px;padding:16px;">
+            <!-- Header -->
+            <div style="font-size:12px;color:#666666;margin-bottom:6px;">
+                {tags}
+                <br/>
+                week#{current_week}
+            </div>
+            <br />
+
+            <div style="font-size:18px;font-weight:700;line-height:1.35;margin-bottom:8px;">
+                #{id} — {name}
+            </div>
+
+            <div style="font-size:14px;line-height:1.6;color:#111111;">
+                {description}
+            </div>
+        </div>
+        <br/>
+        <!-- Footer -->
+        <div style="font-size:12px;color:#888888;line-height:1.5;">
+            <em>Keep it small. Ship it. Measure it.</em>
+            <div style="font-size: 14px; color: #000;">{sender_name}</div>
+            Project Me Practice
+        </div>
+
+</body>
+
+</html>
