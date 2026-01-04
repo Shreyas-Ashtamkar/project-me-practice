@@ -28,10 +28,13 @@ def register_new_user(name, email):
 
 def fetch_registered_users():
     users = []
-    with open(USERS_DB, "r") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            users.append(row)
+    try:
+        with open(USERS_DB, "r") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                users.append(row)
+    except FileNotFoundError:
+        pass
     return users
 
 def modify_user_email(user_id, new_email):
