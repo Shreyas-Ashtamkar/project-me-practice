@@ -2,6 +2,12 @@ from datetime import datetime
 from projectmepractice import register_new_user, feed_all_projects, allocate_next_project_for_user
 from email_me_anything import build_html_content, send_email
 
+from os import getenv
+
+EMAIL_DISABLE = getenv("PROD_MODE", "false").lower() != "true"  # Set to False to enable email sending
+SENDER_NAME = getenv("EMAIL_SENDER_NAME", "Project Bot")
+SENDER_EMAIL = getenv("EMAIL_SENDER_EMAIL", "bot@dev-master.in")
+
 if __name__ == "__main__":
     feed_all_projects("500ProjectsList.csv")
     user = register_new_user("Shreyas", "shreyas.ashtamkar18@gmail.com")
@@ -10,7 +16,7 @@ if __name__ == "__main__":
         **allocated_project,
         'current_week': "1",
         'recipient_name': user['name'],
-        'sender_name': "Shreyas Asus Laptop",
+        'sender_name': SENDER_NAME,
         'tags' : (
             f"{allocated_project['domain']} Domain"
             + (f" | Group {allocated_project['group_id']} | Step {allocated_project['group_part']}" if allocated_project['has_parts'] == 'True' else "")
@@ -18,7 +24,7 @@ if __name__ == "__main__":
         )
     }
     
-    print(data)
+    print(f"Project #{allocated_project['id']} allocated to {user['name']}")
     html_content = build_html_content(
         template_path="email-template.html",
         data = data,
@@ -33,14 +39,17 @@ if __name__ == "__main__":
         }
     )
     
-    with open("debug_email.html", "w") as f:
-        f.write(html_content)
-    
-    status = send_email(
-        subject = datetime.now().strftime("%B %d, %Y"),
-        html_content = html_content,
-        sender={"email": "laptop.shreyas@dev-master.in", "name": "Shreyas Asus Laptop"},
-        recipients=[{"email": user["email"], "name": user["name"]}]
-    )
+    if EMAIL_DISABLE is False:
+        status = send_email(
+            sender={"email": SENDER_EMAIL, "name": SENDER_NAME},
+            recipients=[{"email": user["email"], "name": user["name"]}],
+            subject = datetime.now().strftime("%B %d, %Y"),
+            html_content = html_content
+        )
+        
+    else:
+        with open("debug-email.html", "w") as f:
+            f.write(html_content)
+        status = "Skipped......"
     
     print("Email sent status:", status)
