@@ -48,7 +48,7 @@ fi
 
 # Parse arguments
 action="register"
-cron_expr="0 7 * * 6"  # Default: weekly
+cron_expr="30 7 * * 6"  # Default: weekly
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
