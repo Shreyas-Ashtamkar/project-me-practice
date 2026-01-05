@@ -1,6 +1,7 @@
-import csv, random
-from .const import PROJECTS_DB
+import csv
 from email_me_anything import select_random_row
+
+from .const import PROJECTS_DB
 
 def create_project(pid, name, description, domain, group='', step=None, weeks=1):
     has_parts = bool(len(group))

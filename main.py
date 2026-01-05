@@ -1,22 +1,26 @@
 from datetime import datetime
-from projectmepractice import register_new_user, feed_all_projects, allocate_next_project_for_user
 from email_me_anything import build_html_content, send_email
 
-from os import getenv
-
-EMAIL_DISABLE = getenv("PROD_MODE", "false").lower() != "true"  # Set to False to enable email sending
-SENDER_NAME = getenv("EMAIL_SENDER_NAME", "Project Bot")
-SENDER_EMAIL = getenv("EMAIL_SENDER_EMAIL", "bot@dev-master.in")
+from projectmepractice import (
+    register_new_user, 
+    feed_all_projects, 
+    allocate_next_project_for_user, 
+    PROD_MODE, 
+    EMAIL_SENDER_ADDRESS, 
+    EMAIL_SENDER_NAME
+)
 
 if __name__ == "__main__":
     feed_all_projects("500ProjectsList.csv")
+    
     user = register_new_user("Shreyas", "shreyas.ashtamkar18@gmail.com")
     allocated_project = allocate_next_project_for_user(user_id=user["id"])
+    
     data = {
         **allocated_project,
         'current_week': "1",
         'recipient_name': user['name'],
-        'sender_name': SENDER_NAME,
+        'sender_name': EMAIL_SENDER_NAME,
         'tags' : (
             f"{allocated_project['domain']} Domain"
             + (f" | Group {allocated_project['group_id']} | Step {allocated_project['group_part']}" if allocated_project['has_parts'] == 'True' else "")
@@ -39,11 +43,11 @@ if __name__ == "__main__":
         }
     )
     
-    if EMAIL_DISABLE is False:
+    if PROD_MODE:
         status = send_email(
-            sender={"email": SENDER_EMAIL, "name": SENDER_NAME},
+            sender={"email": EMAIL_SENDER_ADDRESS, "name": EMAIL_SENDER_NAME},
             recipients=[{"email": user["email"], "name": user["name"]}],
-            subject = datetime.now().strftime("%B %d, %Y"),
+            subject = "New Practice Project - " + datetime.now().strftime("%B %d, %Y"),
             html_content = html_content
         )
         
