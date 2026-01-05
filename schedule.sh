@@ -42,7 +42,7 @@ for file in "${files[@]}"; do
 done
 
 if [[ ${#missing[@]} -gt 0 ]]; then
-    echo "Error: Missing files: ${missing[*]}"
+    echo "Error: Missing files: ${missing[*]}, have you run the install script?"
     exit 1
 fi
 
