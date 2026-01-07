@@ -54,7 +54,21 @@ pip install -r requirements.txt
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to install required packages" >&2
     exit 1
+else
+    echo "Required packages installed successfully"
 fi
+
+# Initialize database if script exists and DATABASE_URL is configured
+if [[ -f init_db.py ]] && grep -q "DATABASE_URL=" .env; then
+    python init_db.py
+    if [[ $? -ne 0 ]]; then
+        echo "Error: Database initialization failed" >&2
+        exit 1
+    else
+        echo "Database initialized successfully"
+    fi
+fi
+
 deactivate
 echo "Installation complete. You can now run the application using ./run.sh"
 

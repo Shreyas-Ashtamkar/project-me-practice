@@ -141,7 +141,7 @@ This will:
 ```python
 from projectmepractice import (
     feed_all_projects,
-    register_new_user,
+    register_user,
     allocate_next_project_for_user,
     fetch_allocated_projects,
     fetch_registered_users
@@ -151,7 +151,7 @@ from projectmepractice import (
 feed_all_projects("500ProjectsList.csv")
 
 # Register a new user
-user = register_new_user("John Doe", "john@example.com")
+user = register_user("John Doe", "john@example.com")
 
 # Allocate next unassigned project
 project = allocate_next_project_for_user(user["id"])
@@ -166,13 +166,13 @@ all_users = fetch_registered_users()
 ### Managing Users
 
 ```python
-from projectmepractice import modify_user_email, delete_user
+from projectmepractice import modify_user_email, unregister_user
 
 # Update user email
 modify_user_email(user_id="uuid-here", new_email="newemail@example.com")
 
 # Delete a user
-delete_user(user_id="uuid-here")
+unregister_user(user_id="uuid-here")
 ```
 
 ## Email Configuration
