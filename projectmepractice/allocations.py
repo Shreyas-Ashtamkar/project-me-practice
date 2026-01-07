@@ -1,52 +1,25 @@
-import datetime, csv
-from uuid import uuid4
+from .db import User, Project, Allocation, ModelSelect
 
-from .const import PROJECT_ALLOCATIONS_DB
+def fetch_allocations(user:User|None) -> ModelSelect:
+    allocations = Allocation.select()
+    if user is not None:
+        allocations = allocations.where(Allocation.user == user)
+    return allocations
 
-def fetch_allocated_projects(user_id:str|None=None):
-    allocated_projects = []
-    try:
-        if user_id is None:
-            with open(PROJECT_ALLOCATIONS_DB, "r") as f:
-                reader = csv.DictReader(f)
-                for row in reader:
-                    allocated_projects.append(row)
-        else:
-            with open(PROJECT_ALLOCATIONS_DB, "r") as f:
-                reader = csv.DictReader(f)
-                for row in reader:
-                    if row["user"] == user_id:
-                        allocated_projects.append(row)
-    except FileNotFoundError:
-        print("No allocations found.")
-    except Exception as e:
-        print(f"Error fetching allocated projects: {e}")
+def fetch_allocated_projects(user:User|None) -> ModelSelect:
+    allocated_projects = Project.select().join(Allocation)
+    if user is not None:
+        allocated_projects = allocated_projects.where(Allocation.user == user)
     return allocated_projects
         
-def allocate_project_to_user(project_id:str, user_id:str):
-    new_allocation = {
-        "id": str(uuid4()),
-        "project": project_id,
-        "user": user_id,
-        "date": datetime.datetime.now().isoformat()
-    }
-    
-    with open(PROJECT_ALLOCATIONS_DB, "a", newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=new_allocation.keys())
-        if f.tell() == 0:  # Write header if file is empty
-            writer.writeheader()
-        writer.writerow(new_allocation)
+def allocate_project_to_user(project:Project, user:User) -> Allocation:
+    new_allocation = Allocation.create(
+        user=user,
+        project=project,
+    )
     return new_allocation
 
-def deallocate_project_from_user(project_id:str, user_id:str):
-    all_projects = fetch_allocated_projects()
-    deleted_project = None
-    with open(PROJECT_ALLOCATIONS_DB, "w", newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=["id", "project", "user", "date"])
-        writer.writeheader()
-        for project in all_projects:
-            if not (project["project"] == project_id and project["user"] == user_id):
-                writer.writerow(project)
-            else:
-                deleted_project = project
-    return deleted_project
+def deallocate_project_from_user(user:User, project:Project) -> int:
+    deallocated_project = Allocation.get((Allocation.user == user) & (Allocation.project == project))
+    rows_deleted_count = deallocated_project.delete_instance()
+    return rows_deleted_count

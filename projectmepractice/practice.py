@@ -1,22 +1,19 @@
 from .allocations import allocate_project_to_user, fetch_allocated_projects
-from .projects import select_random_project
+from .projects import fetch_all_projects
+from .db import User, Project
+import random
 
 # TODO : Improve selection logic to inculcate the GROUPS and STEPS of the projects
-def fetch_next_project_for_user(user_id:str):
-    allocated_projects = fetch_allocated_projects(user_id=user_id)
-    allocated_project_ids = {proj["project"] for proj in allocated_projects}
-    selected_project = None
-    for _ in range(500):
-        selected_project = select_random_project()
-        if selected_project["id"] not in allocated_project_ids:
-            break
+def allocate_next_project_for_user(user:User) -> Project:
+    all_projects = fetch_all_projects()
+    allocated_projects = fetch_allocated_projects(user=user)
+    unallocated_projects = all_projects.except_(allocated_projects)
+    if unallocated_projects.count() > 0:
+        selected_project = random.choice(list(unallocated_projects))  
     else:
-        print("Could not find a new project to allocate.")
-    
+        selected_project = None
+    if selected_project is not None:
+        allocate_project_to_user(selected_project, user)
+    else:
+        raise LookupError("No new projects available for allocation.")
     return selected_project
-
-def allocate_next_project_for_user(user_id:str):
-    project = fetch_next_project_for_user(user_id)
-    if project is not None:
-        allocate_project_to_user(project["id"], user_id)
-    return project

@@ -2,7 +2,7 @@ from datetime import datetime
 from email_me_anything import build_html_content, send_email
 
 from projectmepractice import (
-    register_new_user, 
+    register_user, 
     feed_all_projects, 
     allocate_next_project_for_user, 
     PROD_MODE, 
@@ -11,24 +11,19 @@ from projectmepractice import (
 )
 
 if __name__ == "__main__":
-    feed_all_projects("500ProjectsList.csv")
+    # feed_all_projects("500ProjectsList.csv")
     
-    user = register_new_user("Shreyas", "shreyas.ashtamkar18@gmail.com")
-    allocated_project = allocate_next_project_for_user(user_id=user["id"])
+    user = register_user("Shreyas", "shreyas.ashtamkar18@gmail.com")
+    new_allocated_project = allocate_next_project_for_user(user=user)
     
     data = {
-        **allocated_project,
+        **new_allocated_project.to_dict(),
         'current_week': "1",
-        'recipient_name': user['name'],
+        'recipient_name': user.name,
         'sender_name': EMAIL_SENDER_NAME,
-        'tags' : (
-            f"{allocated_project['domain']} Domain"
-            + (f" | Group {allocated_project['group_id']} | Step {allocated_project['group_part']}" if allocated_project['has_parts'] == 'True' else "")
-            + f" | {allocated_project['duration']}" + (" Week" if allocated_project['duration']=='1' else " Weeks")
-        )
     }
     
-    print(f"Project #{allocated_project['id']} allocated to {user['name']}")
+    print(f"Project #{new_allocated_project.id} allocated to {user.name}")
     html_content = build_html_content(
         template_path="email-template.html",
         data = data,
@@ -46,7 +41,7 @@ if __name__ == "__main__":
     if PROD_MODE:
         status = send_email(
             sender={"email": EMAIL_SENDER_ADDRESS, "name": EMAIL_SENDER_NAME},
-            recipients=[{"email": user["email"], "name": user["name"]}],
+            recipients=[{"email": user.email, "name": user.name}],
             subject = "New Practice Project - " + datetime.now().strftime("%B %d, %Y"),
             html_content = html_content
         )

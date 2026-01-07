@@ -1,61 +1,26 @@
-import csv
-from uuid import uuid4
-from datetime import datetime
+from .db import User, ModelSelect
 
-from .const import USERS_DB
-
-def register_new_user(name, email):
-    users = fetch_registered_users()
-    new_user = None
-    for user in users:
-        if user["email"] == email:
-            print("User with this email already exists.")
-            new_user = user
-            break
-    else:
-        new_user = {
-            "id": str(uuid4()),
-            "name": name,
-            "email": email,
-            "created_on": datetime.now().isoformat()
-        }
-        with open(USERS_DB, "a", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=new_user.keys())
-            if f.tell() == 0:  # Write header if file is empty
-                writer.writeheader()
-            writer.writerow(new_user)
+def register_user(name:str, email:str) -> User:
+    existing_user = User.select().where(User.email == email)
+    if existing_user.count() > 0:
+        return existing_user.get()
+    new_user = User.create(name=name, email=email)
     return new_user
 
-def fetch_registered_users():
-    users = []
-    try:
-        with open(USERS_DB, "r") as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                users.append(row)
-    except FileNotFoundError:
-        pass
+def fetch_registered_users() -> ModelSelect:
+    users = User.select()
     return users
 
-def modify_user_email(user_id, new_email):
-    users = fetch_registered_users()
-    modified_user = None
-    with open(USERS_DB, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=["id", "name", "email", "created_on"])
-        writer.writeheader()
-        for user in users:
-            if user["id"] == user_id:
-                user["email"] = new_email
-                modified_user = user
-            writer.writerow(user)
-    return modified_user
+def modify_user_email(user:User, new_email:str) -> User:
+    user.email = new_email
+    user.save()
+    return user
 
-def delete_user(user_id):
-    users = fetch_registered_users()
-    with open(USERS_DB, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=["id", "name", "email", "created_on"])
-        writer.writeheader()
-        for user in users:
-            if user["id"] != user_id:
-                writer.writerow(user)
-    return fetch_registered_users()
+def add_user_week(user:User) -> User:
+    user.week_number += 1
+    user.save()
+    return user
+
+def unregister_user(user:User) -> User:
+    user.delete_instance()
+    return user
