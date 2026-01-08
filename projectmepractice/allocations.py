@@ -17,6 +17,8 @@ def allocate_project_to_user(project:Project, user:User) -> Allocation:
         user=user,
         project=project,
     )
+    user.current_project = project
+    user.save()
     return new_allocation
 
 def deallocate_project_from_user(user:User, project:Project) -> int:
