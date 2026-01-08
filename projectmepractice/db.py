@@ -18,7 +18,7 @@ class Project(Model):
     
     @property
     def has_parts(self):
-        return self.group_id is not None
+        return bool(self.group_id)
     
     @property
     def tags(self) -> str:
