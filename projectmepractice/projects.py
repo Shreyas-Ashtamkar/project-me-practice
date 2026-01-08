@@ -25,8 +25,8 @@ def feed_all_projects(file_name:Path) -> ModelSelect:
         print(f"Error feeding projects: {e}")
     return projects_list
 
-def fetch_all_projects(*args) -> ModelSelect:
-    return Project.select(*args)
+def fetch_all_projects() -> ModelSelect:
+    return Project.select()
 
 # User except_ with another query of selected projects - users' already selected
 # def select_random_project(exclude_projects:ModelSelect)
