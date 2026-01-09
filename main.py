@@ -7,23 +7,20 @@ from projectmepractice import (
     allocate_next_project_for_user, 
     PROD_MODE, 
     EMAIL_SENDER_ADDRESS, 
-    EMAIL_SENDER_NAME
+    EMAIL_SENDER_NAME,
+    UserType, ProjectType, AllocationType,
+    db_initialized
 )
 
-if __name__ == "__main__":
-    # feed_all_projects("500ProjectsList.csv")
-    
-    user = register_user("Shreyas", "shreyas.ashtamkar18@gmail.com")
-    new_allocated_project = allocate_next_project_for_user(user=user)
-    
+def send_project_to_user(user:UserType, project:ProjectType) -> str:
     data = {
-        **new_allocated_project.to_dict(),
+        **project.to_dict(),
         'current_week': "1",
         'recipient_name': user.name,
         'sender_name': EMAIL_SENDER_NAME,
     }
     
-    print(f"Project #{new_allocated_project.id} allocated to {user.name}")
+    print(f"Project #{project.id} allocated to {user.name}")
     html_content = build_html_content(
         template_path="email-template.html",
         data = data,
@@ -51,4 +48,25 @@ if __name__ == "__main__":
             f.write(html_content)
         status = "Skipped......"
     
+    return status
+
+def run(name:str, email:str):
+    if not db_initialized():
+        feed_all_projects("500ProjectsList.csv")
+    
+    user = register_user(name, email)
+    new_allocated_project = allocate_next_project_for_user(user=user)
+    
+    status = send_project_to_user(user, new_allocated_project)
     print("Email sent status:", status)
+
+
+def test():
+    from time import sleep
+    for i in range(50):
+        run()
+        sleep(0.2)
+
+
+if __name__ == "__main__":
+    test()

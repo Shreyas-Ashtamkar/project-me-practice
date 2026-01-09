@@ -2,6 +2,7 @@ import csv, random
 from pathlib import Path
 
 from .db import Project, ModelSelect, db
+from peewee import DoesNotExist
 
 def feed_all_projects(file_name:Path) -> ModelSelect:
     projects_list = []
@@ -25,11 +26,38 @@ def feed_all_projects(file_name:Path) -> ModelSelect:
         print(f"Error feeding projects: {e}")
     return projects_list
 
-def fetch_all_projects() -> ModelSelect:
-    return Project.select()
+def fetch_all_projects(group_id:str|None=None, except_:ModelSelect=None) -> ModelSelect:
+    all_projects = Project.select()
+    if except_ is not None:
+        all_projects.except_(except_)
+    if group_id is not None:
+        all_projects = all_projects.where(Project.group_id == group_id)
+    return all_projects
 
-# User except_ with another query of selected projects - users' already selected
-# def select_random_project(exclude_projects:ModelSelect)
-def select_random_project() -> Project:
-    selected_project = random.choice(list(fetch_all_projects()))
+def fetch_next_project_in_group(group_id:str, group_part:str) -> Project:
+    project = None
+    try:
+        project = Project.get((Project.group_id == group_id) & (Project.group_part == str(int(group_part)+1)))
+    except DoesNotExist as d:
+        print("No new project in group")
+    return project
+
+def fetch_first_project_in_group(group_id:str) -> Project:
+    project = None
+    try:
+        project = Project.get((Project.group_id == group_id) & (Project.group_part == "1"))
+    except DoesNotExist as d:
+        print("No new project in group")
+    return project
+
+def fetch_random_project(project_list:ModelSelect) -> Project:
+    selected_project = None
+    try:
+        selected_project:Project = random.choice(project_list)
+    
+        if selected_project.has_parts:
+            selected_project = fetch_first_project_in_group(selected_project.group_id)
+    except DoesNotExist as err:
+        print(f"Could not fetch random project : {err}")
+            
     return selected_project
