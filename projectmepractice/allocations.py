@@ -1,4 +1,5 @@
 from .db import User, Project, Allocation, ModelSelect
+from .projects import fetch_all_projects
 
 def fetch_allocations(user:User|None) -> ModelSelect:
     allocations = Allocation.select()
@@ -7,7 +8,7 @@ def fetch_allocations(user:User|None) -> ModelSelect:
     return allocations
 
 def fetch_allocated_projects(user:User|None) -> ModelSelect:
-    allocated_projects = Project.select().join(Allocation)
+    allocated_projects = fetch_all_projects().join(Allocation)
     if user is not None:
         allocated_projects = allocated_projects.where(Allocation.user == user)
     return allocated_projects
