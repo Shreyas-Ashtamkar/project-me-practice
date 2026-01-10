@@ -1,5 +1,5 @@
 from .const import DATABASE_URL, USERS_TABLE, PROJECTS_TABLE, ALLOCATIONS_TABLE
-from peewee import SqliteDatabase, Model, CharField, IntegerField, BooleanField, UUIDField, DateField, ForeignKeyField, ModelSelect
+from peewee import SqliteDatabase, Model, CharField, IntegerField, BooleanField, UUIDField, DateField, ForeignKeyField, ModelSelect, DoesNotExist
 
 from datetime import datetime
 
@@ -17,9 +17,14 @@ class Project(Model):
     group_part = CharField(null=True)
     
     @property
-    def has_parts(self):
+    def has_parts(self) -> bool:
         return bool(self.group_id)
     
+    def next_group_part(self) -> Project | None:
+        if not self.has_parts: 
+            raise DoesNotExist("This group does not have parts")
+        return Project.get(Project.group_id==self.group_id, Project.group_part==(str(int(self.group_part)+1)))
+
     @property
     def tags(self) -> str:
         tags = (
@@ -56,7 +61,7 @@ class User(Model):
     created_on = DateField(default=datetime.today)
     week_number = IntegerField(default=0)
     is_active = BooleanField(default=True)
-    current_project = ForeignKeyField(Project, null=True)
+    current_project:Project = ForeignKeyField(Project, null=True)
     
     def to_dict(self):
         return {
@@ -77,8 +82,8 @@ class User(Model):
 
 class Allocation(Model):
     id = UUIDField(primary_key=True, default=uuid4)
-    user = ForeignKeyField(User, backref="allocations")
-    project = ForeignKeyField(Project, backref="allocations")
+    user:User = ForeignKeyField(User, backref="allocations")
+    project:Project = ForeignKeyField(Project, backref="allocations")
     date = DateField(default=datetime.today)
     
     def to_dict(self):

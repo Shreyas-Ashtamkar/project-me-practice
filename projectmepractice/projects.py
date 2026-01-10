@@ -26,27 +26,25 @@ def feed_all_projects(file_name:Path) -> ModelSelect:
         print(f"Error feeding projects: {e}")
     return projects_list
 
-def fetch_all_projects(group_id:str|None=None, except_:ModelSelect=None) -> ModelSelect:
+def fetch_all_projects(except_:ModelSelect=None) -> ModelSelect:
     all_projects = Project.select()
     if except_ is not None:
         all_projects.except_(except_)
-    if group_id is not None:
-        all_projects = all_projects.where(Project.group_id == group_id)
     return all_projects
 
-def fetch_next_project_in_group(group_id:str, group_part:str) -> Project:
-    project = None
+def fetch_next_project_in_group(project:Project) -> Project:
     try:
-        project = Project.get((Project.group_id == group_id) & (Project.group_part == str(int(group_part)+1)))
-    except DoesNotExist as d:
+        return project.next_group_part()
+    except DoesNotExist:
         print("No new project in group")
-    return project
+    return None
 
-def fetch_first_project_in_group(group_id:str) -> Project:
+def fetch_first_project_in_group(project:Project) -> Project:
+    group_id = project.group_id
     project = None
     try:
         project = Project.get((Project.group_id == group_id) & (Project.group_part == "1"))
-    except DoesNotExist as d:
+    except DoesNotExist:
         print("No new project in group")
     return project
 
@@ -56,8 +54,8 @@ def fetch_random_project(project_list:ModelSelect) -> Project:
         selected_project:Project = random.choice(project_list)
     
         if selected_project.has_parts:
-            selected_project = fetch_first_project_in_group(selected_project.group_id)
+            selected_project = fetch_first_project_in_group(selected_project)
     except DoesNotExist as err:
-        print(f"Could not fetch random project : {err}")
+        print(f"Could not fetch random project")
             
     return selected_project
