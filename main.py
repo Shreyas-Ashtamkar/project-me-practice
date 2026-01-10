@@ -61,12 +61,7 @@ def run(name:str, email:str):
     print("Email sent status:", status)
 
 
-def test():
-    from time import sleep
-    for i in range(50):
-        run()
-        sleep(0.2)
-
-
 if __name__ == "__main__":
-    test()
+    run("Shreyas", "shreyas.ashtamkar18@gmail.com")
+    run("Rakshita", "puti.astagi@gmail.com")
+    
