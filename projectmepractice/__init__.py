@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .users import register_user
 from .projects import feed_all_projects, feed_all_projects, fetch_all_projects
 from .practice import allocate_next_project_for_user
