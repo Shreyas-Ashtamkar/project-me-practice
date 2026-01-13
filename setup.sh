@@ -198,20 +198,48 @@ if [[ ! -f .env ]]; then
     PROD_MODE=${PROD_MODE:-false}
     sed -i "s|PROD_MODE=.*|PROD_MODE=$PROD_MODE|" .env
 
-    if [[ "$PROD_MODE" == "true" ]]; then
-        read -p "Enter MailerSend API key: " MAILERSEND_KEY
-        sed -i "s|MAILERSEND_API_KEY=.*|MAILERSEND_API_KEY=$MAILERSEND_KEY|" .env
-    else
-        sed -i "s|MAILERSEND_API_KEY=.*|MAILERSEND_API_KEY=your-mailersend-api-key-here|" .env
-    fi
-
     read -p "Enter email sender name [default: Project Bot]: " EMAIL_SENDER_NAME
     EMAIL_SENDER_NAME=${EMAIL_SENDER_NAME:-Project Bot}
     sed -i "s|EMAIL_SENDER_NAME=.*|EMAIL_SENDER_NAME=$EMAIL_SENDER_NAME|" .env
 
-    read -p "Enter email sender address [default: no-reply@your-domain.com]: " EMAIL_SENDER_ADDRESS
-    EMAIL_SENDER_ADDRESS=${EMAIL_SENDER_ADDRESS:-no-reply@your-domain.com}
+    read -p "Enter email sender address: " EMAIL_SENDER_ADDRESS
     sed -i "s|EMAIL_SENDER_ADDRESS=.*|EMAIL_SENDER_ADDRESS=$EMAIL_SENDER_ADDRESS|" .env
+
+    if [[ "$PROD_MODE" == "true" ]]; then
+        read -p "Choose mailer client - 'smtp' or 'mailersend' [default: mailersend]: " MAILER_CLIENT
+        MAILER_CLIENT=${MAILER_CLIENT:-mailersend}
+        sed -i "s|MAILER_CLIENT=.*|MAILER_CLIENT=\"$MAILER_CLIENT\"|" .env
+
+        if [[ "$MAILER_CLIENT" == "smtp" ]]; then
+            read -p "Enter SMTP_HOST: " SMTP_HOST
+            sed -i "s|SMTP_HOST = .*|SMTP_HOST = \"$SMTP_HOST\"|" .env
+            
+            read -p "Enter SMTP_PORT: " SMTP_PORT
+            sed -i "s|SMTP_PORT = .*|SMTP_PORT = $SMTP_PORT|" .env
+            
+            read -p "Enter SMTP_USER: " SMTP_USER
+            sed -i "s|SMTP_USER = .*|SMTP_USER = \"$SMTP_USER\"|" .env
+            
+            read -p "Enter SMTP_PASS: " SMTP_PASS
+            sed -i "s|SMTP_PASS = .*|SMTP_PASS = \"$SMTP_PASS\"|" .env
+        else
+            read -p "Enter MailerSend API key: " MAILERSEND_API_KEY
+            sed -i "s|MAILERSEND_API_KEY=.*|MAILERSEND_API_KEY=\"$MAILERSEND_API_KEY\"|" .env
+        fi
+    else
+        sed -i "s|MAILER_CLIENT=.*|MAILER_CLIENT=\"mailersend\"|" .env
+        read -p "Enter MailerSend API key: " MAILERSEND_API_KEY
+        sed -i "s|MAILERSEND_API_KEY=.*|MAILERSEND_API_KEY=\"$MAILERSEND_API_KEY\"|" .env
+    fi
+
+    read -p "Enable AI features (true/false) [default: false]: " AI_FEATURES_ENABLED
+    AI_FEATURES_ENABLED=${AI_FEATURES_ENABLED:-false}
+    sed -i "s|AI_FEATURES_ENABLED=.*|AI_FEATURES_ENABLED=\"$AI_FEATURES_ENABLED\"|" .env
+
+    if [[ "$AI_FEATURES_ENABLED" == "true" ]]; then
+        read -p "Enter OpenAI API key: " OPENAI_API_KEY
+        sed -i "s|OPENAI_API_KEY=.*|OPENAI_API_KEY=\"$OPENAI_API_KEY\"|" .env
+    fi
 
     echo ".env configuration complete"
 fi
