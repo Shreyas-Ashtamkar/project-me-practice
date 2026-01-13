@@ -77,4 +77,3 @@ if __name__ == "__main__":
             run(reciever[NAME], reciever[EMAIL])
     else:
         run("Shreyas", "shreyas.ashtamkar18@gmail.com")
-    # run("Priyanka", "priyanka.c.ashtamkar@gmail.com")
