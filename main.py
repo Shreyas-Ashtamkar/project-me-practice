@@ -63,4 +63,4 @@ def run(name:str, email:str):
 
 if __name__ == "__main__":
     run("Shreyas", "shreyas.ashtamkar18@gmail.com")
-    run("Priyanka", "priyanka.c.ashtamkar@gmail.com")
+    # run("Priyanka", "priyanka.c.ashtamkar@gmail.com")
