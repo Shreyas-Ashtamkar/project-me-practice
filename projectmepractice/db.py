@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .const import DATABASE_URL, USERS_TABLE, PROJECTS_TABLE, ALLOCATIONS_TABLE
 from peewee import SqliteDatabase, Model, CharField, IntegerField, BooleanField, UUIDField, DateField, ForeignKeyField, ModelSelect, DoesNotExist
 
@@ -23,7 +25,7 @@ class Project(Model):
     def next_group_part(self) -> Project | None:
         if not self.has_parts: 
             raise DoesNotExist("This group does not have parts")
-        return Project.get(Project.group_id==self.group_id, Project.group_part==(str(int(self.group_part)+1)))
+        return Project.get((Project.group_id==self.group_id) & (Project.group_part==(str(int(self.group_part)+1))))
 
     @property
     def tags(self) -> str:
