@@ -264,7 +264,7 @@ else
 fi
 
 # Initialize database if script exists and DATABASE_URL is configured
-if [[ -f init_db.py ]] && grep -q "DATABASE_URL=" .env; then
+if [[ -f init_db.py ]] && grep -q "DATABASE_URL" .env; then
     python init_db.py
     if [[ $? -ne 0 ]]; then
         echo "Error: Database initialization failed" >&2
@@ -272,6 +272,8 @@ if [[ -f init_db.py ]] && grep -q "DATABASE_URL=" .env; then
     else
         echo "Database initialized successfully"
     fi
+else
+    echo "Database initialization skipped (init_db.py not found or DATABASE_URL not set)"
 fi
 
 deactivate
