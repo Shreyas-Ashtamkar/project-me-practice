@@ -5,12 +5,12 @@ print_help() {
 Project Me Practice - Installer
 
 Usage:
-  ./install.sh [command] [options]
+  ./setup.sh [command] [options]
 
 Commands:
-  update [--force|-f] [--dry-run] [--branch <name>]  Update repo and re-run installer
+  update [--force|-f] [--dry-run] [--branch <name>]  Update repo and re-run setup
   uninstall                                          Remove .venv, .env and optionally db.sqlite3
-  (no args)                                          Run installer (default)
+  (no args)                                          Run setup (default)
 
 Options:
   --help, -h                                         Show this help and exit
@@ -20,7 +20,7 @@ HELP
 
 # If no args provided, print a short header and continue
 if [[ $# -eq 0 ]]; then
-    echo "Project Me Practice installer — run './install.sh --help' for usage details"
+    echo "Project Me Practice setup — run './setup.sh --help' for usage details"
 else
     if [[ "$1" == "--help" || "$1" == "-h" ]]; then
         print_help
@@ -28,7 +28,7 @@ else
     fi
 fi
 
-# Update option: pulls latest changes and re-runs installer
+# Update option: pulls latest changes and re-runs setup
 if [[ "$1" == "update" || "$1" == "--update" ]]; then
     shift
 
@@ -119,7 +119,7 @@ if [[ "$1" == "update" || "$1" == "--update" ]]; then
         exit 1
     fi
 
-    echo "Repository updated. Re-running installer..."
+    echo "Repository updated. Re-running setup..."
     # Re-run this script without arguments to perform a fresh install
     exec "$0"
 fi
