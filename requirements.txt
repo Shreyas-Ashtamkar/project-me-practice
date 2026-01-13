@@ -1,2 +1,2 @@
-email_me_anything==0.1.1
+email_me_anything==0.2.3
 peewee

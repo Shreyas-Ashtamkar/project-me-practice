@@ -62,7 +62,5 @@ def run(name:str, email:str):
 
 
 if __name__ == "__main__":
-    # This not working because of email_me_anything -> denail of domain
     run("Shreyas", "shreyas.ashtamkar18@gmail.com")
-    run("Rakshita", "puti.astagi@gmail.com")
-    
+    run("Priyanka", "priyanka.c.ashtamkar@gmail.com")
