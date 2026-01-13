@@ -62,5 +62,18 @@ def run(name:str, email:str):
 
 
 if __name__ == "__main__":
-    run("Shreyas", "shreyas.ashtamkar18@gmail.com")
+    from pathlib import Path
+    subscribed_users_file = Path("subscribed_users.db.csv")
+    if subscribed_users_file.exists():
+        SUBSCRIBER_FILE_PRESENT = True
+        NAME,EMAIL=0,1
+        with open(subscribed_users_file, 'r') as input_file:
+            recepients = input_file.readlines()[1:]
+            SUBSCRIBER_FILE_PRESENT = len(recepients)>0
+                
+    if SUBSCRIBER_FILE_PRESENT:
+        for reciever in recepients:
+            run(reciever[NAME], reciever[EMAIL])
+    else:
+        run("Shreyas", "shreyas.ashtamkar18@gmail.com")
     # run("Priyanka", "priyanka.c.ashtamkar@gmail.com")
