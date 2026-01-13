@@ -73,6 +73,7 @@ if __name__ == "__main__":
                 
     if SUBSCRIBER_FILE_PRESENT:
         for reciever in recepients:
+            reciever = reciever.split(",")
             run(reciever[NAME], reciever[EMAIL])
     else:
         run("Shreyas", "shreyas.ashtamkar18@gmail.com")
