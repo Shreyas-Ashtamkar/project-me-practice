@@ -196,14 +196,14 @@ if [[ ! -f .env ]]; then
     
     read -p "Enable production mode (true/false) [default: false]: " PROD_MODE
     PROD_MODE=${PROD_MODE:-false}
-    sed -i "s|PROD_MODE=.*|PROD_MODE=$PROD_MODE|" .env
+    sed -i "s|PROD_MODE=.*|PROD_MODE=\"$PROD_MODE\"|" .env
 
     read -p "Enter email sender name [default: Project Bot]: " EMAIL_SENDER_NAME
     EMAIL_SENDER_NAME=${EMAIL_SENDER_NAME:-Project Bot}
-    sed -i "s|EMAIL_SENDER_NAME=.*|EMAIL_SENDER_NAME=$EMAIL_SENDER_NAME|" .env
+    sed -i "s|EMAIL_SENDER_NAME=.*|EMAIL_SENDER_NAME=\"$EMAIL_SENDER_NAME\"|" .env
 
     read -p "Enter email sender address: " EMAIL_SENDER_ADDRESS
-    sed -i "s|EMAIL_SENDER_ADDRESS=.*|EMAIL_SENDER_ADDRESS=$EMAIL_SENDER_ADDRESS|" .env
+    sed -i "s|EMAIL_SENDER_ADDRESS=.*|EMAIL_SENDER_ADDRESS=\"$EMAIL_SENDER_ADDRESS\"|" .env
 
     if [[ "$PROD_MODE" == "true" ]]; then
         read -p "Choose mailer client - 'smtp' or 'mailersend' [default: mailersend]: " MAILER_CLIENT
