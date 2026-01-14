@@ -19,7 +19,6 @@ def send_project_to_user(user:UserType, project:ProjectType) -> str:
         'recipient_name': user.name,
         'sender_name': EMAIL_SENDER_NAME,
     }
-    
     print(f"Project #{project.id} allocated to {user.name}")
     html_content = build_html_content(
         template_path="email-template.html",
@@ -34,7 +33,6 @@ def send_project_to_user(user:UserType, project:ProjectType) -> str:
             "sender_name": "sender_name",
         }
     )
-    
     if PROD_MODE:
         status = send_email(
             sender={"email": EMAIL_SENDER_ADDRESS, "name": EMAIL_SENDER_NAME},
@@ -42,28 +40,29 @@ def send_project_to_user(user:UserType, project:ProjectType) -> str:
             subject = "New Practice Project - " + datetime.now().strftime("%B %d, %Y"),
             html_content = html_content
         )
-        
     else:
         with open("debug-email.html", "w") as f:
             f.write(html_content)
         status = "Skipped......"
-    
     return status
 
 def run(name:str, email:str):
-    if not db_initialized():
-        feed_all_projects("500ProjectsList.csv")
-    
     user = register_user(name, email)
     new_allocated_project = allocate_next_project_for_user(user=user)
-    
     status = send_project_to_user(user, new_allocated_project)
     print("Email sent status:", status)
 
 
 if __name__ == "__main__":
     from pathlib import Path
+    
     subscribed_users_file = Path("subscribed_users.db.csv")
+    projects_file = Path("projects.db.csv")
+    projects_file = projects_file if projects_file.exists() else Path("example_projects.csv")
+
+    if not db_initialized():
+        feed_all_projects(projects_file)
+        
     if subscribed_users_file.exists():
         SUBSCRIBER_FILE_PRESENT = True
         NAME,EMAIL=0,1
