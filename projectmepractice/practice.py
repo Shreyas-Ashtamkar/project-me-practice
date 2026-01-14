@@ -1,8 +1,14 @@
+from openai import OpenAI
+from functools import cache
+
 from .allocations import allocate_project_to_user, fetch_allocated_projects
 from .projects import fetch_all_projects, fetch_next_project_in_group, fetch_random_project
 from .db import User, Project
 
-# TODO: Fix Problem -> Project only selected in group again and again
+from .const import AI_FEATURES_ENABLED, _AI_INSTRUCTION_PROMPT, _AI_INPUT_TEMPLATE, _AI_EMAIL_INJECTION_TEMPLATE
+
+client = OpenAI()
+
 def allocate_next_project_for_user(user:User) -> Project:
     selected_project = None
     
@@ -19,3 +25,39 @@ def allocate_next_project_for_user(user:User) -> Project:
     else:
         raise LookupError("No new projects available for allocation.")
     return selected_project
+
+def __generate_document(project:dict):
+    response = client.chat.completions.create(
+        model="openai/gpt-oss-20b",
+        temperature=0,
+        messages=[
+            {"role":"system", "content":_AI_INSTRUCTION_PROMPT},
+            {"role":"user", "content":_AI_INPUT_TEMPLATE.format(**project)}
+        ],
+        reasoning_effort="none"
+    )
+    print(f"Used {response.usage.total_tokens} tokens")
+    return response.choices[0].message.content
+
+@cache
+def __get_template_content(template_path:str):
+    template = ""
+    with open(template_path, 'r') as file:
+        template = file.read()
+    return template
+
+def build_html_content(template_path:str, data:dict, variable_map:dict|None=None) -> str:
+    if variable_map is not None:
+        for key in variable_map:
+            data[key] = data[variable_map[key]]
+    template = __get_template_content(template_path)
+    if AI_FEATURES_ENABLED:
+        try:
+            generated_html = __generate_document(data)
+        except Exception as e:
+            print("practice:60:",e)
+            
+        if len(generated_html) > 0:
+            data["description"] = _AI_EMAIL_INJECTION_TEMPLATE.format(short_description=data["description"], generated_html=generated_html)
+    
+    return template.format(**data)

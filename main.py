@@ -1,6 +1,7 @@
 from datetime import datetime
-from email_me_anything import build_html_content, send_email
+from email_me_anything import send_email
 
+from projectmepractice.types import UserType, ProjectType, AllocationType
 from projectmepractice import (
     register_user, 
     feed_all_projects, 
@@ -8,8 +9,8 @@ from projectmepractice import (
     PROD_MODE, 
     EMAIL_SENDER_ADDRESS, 
     EMAIL_SENDER_NAME,
-    UserType, ProjectType, AllocationType,
-    db_initialized
+    db_initialized,
+    build_html_content
 )
 
 def send_project_to_user(user:UserType, project:ProjectType) -> str:
@@ -41,9 +42,9 @@ def send_project_to_user(user:UserType, project:ProjectType) -> str:
             html_content = html_content
         )
     else:
-        with open("debug-email.html", "w") as f:
+        with open("debug-email.html", "w", encoding="utf-8", newline="\n") as f:
             f.write(html_content)
-        status = "Skipped......"
+        status = {"status":"Skipped......", "message":"PROD mode is off"}
     return status
 
 def run(name:str, email:str):
@@ -54,13 +55,16 @@ def run(name:str, email:str):
 
 
 if __name__ == "__main__":
+    from os import getenv
     from pathlib import Path
     from concurrent.futures import ThreadPoolExecutor
     
     subscribed_users_file = Path("subscribed_users.db.csv")
-    projects_file = Path("projects.db.csv")
+    projects_file = Path("prod.projects.db.csv")
     projects_file = projects_file if projects_file.exists() else Path("example_projects.csv")
-
+    
+    MUTI_THREADED_EXECUTION = getenv("MUTI_THREADED_EXECUTION", "false") == "true"
+    
     if not db_initialized():
         feed_all_projects(projects_file)
         
@@ -76,7 +80,12 @@ if __name__ == "__main__":
             recipient = recipient_line.split(",")
             run(recipient[NAME], recipient[EMAIL].strip())
         
-        with ThreadPoolExecutor(max_workers=5) as executor:
-            executor.map(process_recipient, recepients)
+        if MUTI_THREADED_EXECUTION:
+            with ThreadPoolExecutor(max_workers=5) as executor:
+                executor.map(process_recipient, recepients)
+        else:
+            for recipient in recepients:
+                process_recipient(recipient)
+            
     else:
         run("Shreyas", "shreyas.ashtamkar18@gmail.com")
