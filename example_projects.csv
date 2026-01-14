@@ -1,0 +1,6 @@
+ID,Group,Step,Domain,Project Idea,Description,Weeks
+1,I,1,IOT,Air Quality Pocket Node,PM2.5/PM10 sensing with cheap sensor,1
+2,I,2,Web,Air Quality Web Panel,Live charts + thresholds,1
+3,I,3,Automation,Pollution Alert Bot,Notify when AQI crosses limit,1
+4,I,4,Mobile,Air Exposure Diary,Manual + sensor-based logging,1
+5,I,5,System,Sensor Data Retention Policy,Auto-rollups + pruning,1
