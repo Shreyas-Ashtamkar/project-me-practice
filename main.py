@@ -55,6 +55,7 @@ def run(name:str, email:str):
 
 if __name__ == "__main__":
     from pathlib import Path
+    from concurrent.futures import ThreadPoolExecutor
     
     subscribed_users_file = Path("subscribed_users.db.csv")
     projects_file = Path("projects.db.csv")
@@ -71,8 +72,11 @@ if __name__ == "__main__":
             SUBSCRIBER_FILE_PRESENT = len(recepients)>0
                 
     if SUBSCRIBER_FILE_PRESENT:
-        for reciever in recepients:
-            reciever = reciever.split(",")
-            run(reciever[NAME], reciever[EMAIL])
+        def process_recipient(recipient_line:str):
+            recipient = recipient_line.split(",")
+            run(recipient[NAME], recipient[EMAIL].strip())
+        
+        with ThreadPoolExecutor(max_workers=5) as executor:
+            executor.map(process_recipient, recepients)
     else:
         run("Shreyas", "shreyas.ashtamkar18@gmail.com")
