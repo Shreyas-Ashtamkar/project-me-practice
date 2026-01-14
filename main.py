@@ -50,7 +50,7 @@ def run(name:str, email:str):
     user = register_user(name, email)
     new_allocated_project = allocate_next_project_for_user(user=user)
     status = send_project_to_user(user, new_allocated_project)
-    print("Email sent status:", status)
+    print(f"Email sending to {name}:", status["status"])
 
 
 if __name__ == "__main__":
