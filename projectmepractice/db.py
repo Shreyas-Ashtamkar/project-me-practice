@@ -65,6 +65,10 @@ class User(Model):
     is_active = BooleanField(default=True)
     current_project:Project = ForeignKeyField(Project, null=True)
     
+    @property
+    def is_new(self) -> bool:
+        return not bool(self.current_project)
+    
     def to_dict(self):
         return {
             "id": str(self.id),
