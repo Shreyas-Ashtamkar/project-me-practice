@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Weekly {current_week} Project - {date}</title>
+</head>
+
+<body style="margin:0;padding:0;background:#ffffff;color:#111111;font-family:Arial,Helvetica,sans-serif;">
+    <div style="margin:0 auto;padding:18px;">
+
+        <!-- Top brand strip -->
+        <div style="margin:0 0 14px 0;">
+            <div style="display:inline-block;font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:#666666;">
+                Project Me Practice
+            </div>
+            <div style="height:3px;width:52px;background:#111111;border-radius:999px;margin-top:8px;"></div>
+        </div>
+
+        Hi {recipient_name},<br/><br/>
+        Here's the project of the week:<br/><br/>
+
+        <!-- Main -->
+        <div style="border:1px solid #eeeeee;border-radius:12px;padding:16px;">
+
+            <div style="font-size:12px;color:#666666;letter-spacing:0.4px;">
+                week#{current_week}
+            </div>
+
+            <!-- Header -->
+            <div style="font-size:18px;font-weight:700;line-height:1.35;margin:8px 0 8px 0;">
+                {name}
+            </div>
+
+            <!-- Tags (render as subtle pills; keep your {tags} as plain text or pre-formatted pills) -->
+            <div style="font-size:12px;color:#666666;margin-bottom:10px;line-height:1.6;">
+                <span style="display:inline-block;padding:6px 10px;border:1px solid #eeeeee;border-radius:999px;background:#fafafa;color:#444444;">
+                    {tags}
+                </span>
+            </div>
+
+            <div style="font-size:14px;line-height:1.65;color:#111111;">
+                {description}
+            </div>
+
+        </div>
+
+        <br/>
+
+        <!-- Footer -->
+        <div style="font-size:14px;color:#888888;line-height:1.55;">
+            <em>Keep it small. Ship it. Measure it.</em>
+            <div style="font-size:16px;color:#000;margin-top:4px;">{sender_name}</div>
+            <div style="margin-top:2px;">Project Me Practice</div>
+        </div>
+
+    </div>
+</body>
+
+</html>

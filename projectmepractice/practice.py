@@ -42,16 +42,16 @@ def __generate_document(data:dict):
 @cache
 def __get_template_content(template_path:str):
     template = ""
-    with open(template_path, 'r') as file:
+    with open(template_path, 'r', encoding="utf-8") as file:
         template = file.read()
     return template
 
-def build_html_content(template_path:str, data:dict, variable_map:dict|None=None) -> str:
+def build_html_content(template_path:str, data:dict, variable_map:dict|None=None, simple=False) -> str:
     if variable_map is not None:
         for key in variable_map:
             data[key] = data[variable_map[key]]
     template = __get_template_content(template_path)
-    if AI_FEATURES_ENABLED:
+    if (not simple) and AI_FEATURES_ENABLED:
         try:
             generated_html = __generate_document(data)
         except Exception as e:

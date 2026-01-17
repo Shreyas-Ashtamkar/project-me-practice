@@ -19,19 +19,14 @@ def send_project_to_user(user:UserType, project:ProjectType) -> str:
         'current_week': "1",
         'recipient_name': user.name,
         'sender_name': EMAIL_SENDER_NAME,
+        'date': datetime.now().strftime("%B %d, %Y")
     }
     print(f"Project #{project.id} allocated to {user.name}")
     html_content = build_html_content(
-        template_path="email-template.html",
+        template_path="email-templates/project.html",
         data = data,
         variable_map={
-            "id" : "id",
-            "name" : "title",
-            "description" : "description",
-            "tags" : "tags",
-            "current_week": "current_week",
-            "recipient_name": "recipient_name",
-            "sender_name": "sender_name",
+            "name" : "title"
         }
     )
     if PROD_MODE:
@@ -47,11 +42,41 @@ def send_project_to_user(user:UserType, project:ProjectType) -> str:
         status = {"status":"Skipped......", "message":"PROD mode is off"}
     return status
 
+def send_greeting_to_user(user:UserType):
+    data = {
+        'current_week': "1",
+        'recipient_name': user.name,
+        'sender_name': EMAIL_SENDER_NAME,
+        'date': datetime.now().strftime("%B %d, %Y")
+    }
+    print(f"Welcoming {user.name}.")
+    html_content = build_html_content(
+        template_path="email-templates/welcome.html",
+        data=data,
+        simple=True #Disable AI for greeting, as it's not implemented
+    )
+    print("Built HTML template")
+    if PROD_MODE:
+        status = send_email(
+            sender={"email": EMAIL_SENDER_ADDRESS, "name": EMAIL_SENDER_NAME},
+            recipients=[{"email": user.email, "name": user.name}],
+            subject = "Welcome to Practice Me Project",
+            html_content = html_content
+        )
+    else:
+        with open("debug-email.html", "w", encoding="utf-8", newline="\n") as f:
+            f.write(html_content)
+        status = {"status":"Skipped......", "message":"PROD mode is off"}
+    return status
+
 def run(name:str, email:str):
     user = register_user(name, email)
+    if user.is_new:
+        status = send_greeting_to_user(user)
+        print(f"Email sending (greeting) to {name}:", status["status"])
     new_allocated_project = allocate_next_project_for_user(user=user)
     status = send_project_to_user(user, new_allocated_project)
-    print(f"Email sending to {name}:", status["status"])
+    print(f"Email sending (project) to {name}:", status["status"])
 
 
 if __name__ == "__main__":
