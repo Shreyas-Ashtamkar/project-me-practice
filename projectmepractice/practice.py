@@ -7,6 +7,8 @@ from .db import User, Project
 
 from .const import AI_FEATURES_ENABLED, _AI_INSTRUCTION_PROMPT, _AI_INPUT_TEMPLATE, _AI_EMAIL_INJECTION_TEMPLATE
 
+from copy import deepcopy
+
 client = OpenAI()
 
 def allocate_next_project_for_user(user:User) -> Project:
@@ -30,6 +32,7 @@ def __generate_document(data:dict):
     response = client.chat.completions.create(
         model="openai/gpt-oss-20b",
         temperature=0,
+        max_tokens=4096,
         messages=[
             {"role":"system", "content":_AI_INSTRUCTION_PROMPT},
             {"role":"user", "content":_AI_INPUT_TEMPLATE.format(**data)}
@@ -47,6 +50,7 @@ def __get_template_content(template_path:str):
     return template
 
 def build_html_content(template_path:str, data:dict, variable_map:dict|None=None, simple=False) -> str:
+    data = deepcopy(data)
     if variable_map is not None:
         for key in variable_map:
             data[key] = data[variable_map[key]]
