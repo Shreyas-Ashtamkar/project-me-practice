@@ -26,13 +26,13 @@ def allocate_next_project_for_user(user:User) -> Project:
         raise LookupError("No new projects available for allocation.")
     return selected_project
 
-def __generate_document(project:dict):
+def __generate_document(data:dict):
     response = client.chat.completions.create(
         model="openai/gpt-oss-20b",
         temperature=0,
         messages=[
             {"role":"system", "content":_AI_INSTRUCTION_PROMPT},
-            {"role":"user", "content":_AI_INPUT_TEMPLATE.format(**project)}
+            {"role":"user", "content":_AI_INPUT_TEMPLATE.format(**data)}
         ],
         reasoning_effort="none"
     )
