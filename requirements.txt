@@ -1,3 +1,4 @@
 email_me_anything==0.2.3
 peewee==3.18.3
 openai==2.15.0
+streamlit==1.53.1
