@@ -16,7 +16,7 @@ from projectmepractice.const import (
     EMAIL_SENDER_NAME
 )
 
-from welcome import welcome_user
+from onboarding import send_greeting
 
 def send_project_to_user(user:UserType, project:ProjectType) -> str:
     data = {
@@ -50,7 +50,8 @@ def send_project_to_user(user:UserType, project:ProjectType) -> str:
 def run(name:str, email:str):
     user = register_user(name, email)
     if user.is_new:
-        welcome_user(name, email)
+        send_greeting(user)
+        
     new_allocated_project = allocate_next_project_for_user(user=user)
     status = send_project_to_user(user, new_allocated_project)
     print(f"Email sending (project) to {name}:", status["status"])

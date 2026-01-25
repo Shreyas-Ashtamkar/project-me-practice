@@ -16,9 +16,34 @@ from projectmepractice.const import (
     EMAIL_SENDER_NAME
 )
 
-from welcome import welcome_user
+def send_greeting(user:UserType):
+    data = {
+        'current_week': "1",
+        'recipient_name': user.name,
+        'sender_name': EMAIL_SENDER_NAME,
+        'date': datetime.now().strftime("%B %d, %Y")
+    }
+    print(f"Welcoming {user.name}.")
+    html_content = build_html_content(
+        template_path="email-templates/welcome.html",
+        data=data,
+        simple=True #Disable AI for greeting, as it's not implemented
+    )
+    print("Built HTML template")
+    if PROD_MODE:
+        status = send_email(
+            sender={"email": EMAIL_SENDER_ADDRESS, "name": EMAIL_SENDER_NAME},
+            recipients=[{"email": user.email, "name": user.name}],
+            subject = "Welcome to Practice Me Project",
+            html_content = html_content
+        )
+    else:
+        with open("debug-email.html", "w", encoding="utf-8", newline="\n") as f:
+            f.write(html_content)
+        status = {"status":"Skipped......", "message":"PROD mode is off"}
+    return status
 
-def send_project_to_user(user:UserType, project:ProjectType) -> str:
+def send_project(user:UserType, project:ProjectType) -> str:
     data = {
         **project.to_dict(),
         'current_week': "1",
@@ -47,20 +72,29 @@ def send_project_to_user(user:UserType, project:ProjectType) -> str:
         status = {"status":"Skipped......", "message":"PROD mode is off"}
     return status
 
-def run(name:str, email:str):
-    user = register_user(name, email)
+def run(user:UserType|str, email:str, no_greetings:bool=False, no_projects:bool=False):
+    if isinstance(user, str):
+        user = register_user(user,email)
+    
     if user.is_new:
-        # welcome_user(name, email)
-        new_allocated_project = allocate_next_project_for_user(user=user)
-        status = send_project_to_user(user, new_allocated_project)
-        print(f"Email sending (project) to {name}:", status["status"])
-
+        if no_greetings:
+            status = {"status":"skipped", "message":"no_greetings set"}
+        else:
+            status = send_greeting(user)
+        print(f"Email sending (greeting) to {user.name}:", status["status"])
+        if no_projects:
+            status = {"status":"skipped", "message":"no_greetings set"}
+        else:
+            new_allocated_project = allocate_next_project_for_user(user=user)
+            status = send_project(user, new_allocated_project)
+        print(f"Email sending (project) to {user.name}:", status["status"])
+    
 if __name__ == "__main__":
     from os import getenv
     from pathlib import Path
     from concurrent.futures import ThreadPoolExecutor
     
-    subscribed_users_file = Path("subscribed_users.db.csv")
+    subscribed_users_file = subscribed_users_file = Path("subscribed_users.db.csv")
     projects_file = Path("prod.projects.db.csv")
     projects_file = projects_file if projects_file.exists() else Path("example_projects.csv")
     
