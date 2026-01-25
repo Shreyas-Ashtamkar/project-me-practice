@@ -16,17 +16,11 @@ class ProjectType():
     group_part: str
     allocations: List[AllocationType]
     
+    def get_id(self) -> str:
+        pass
+    
     def to_dict(self) -> Dict[str, Any]:
-        return {
-            "id":self.id,
-            "title":self.title,
-            "description":self.description,
-            "domain":self.domain,
-            "duration":self.duration,
-            "group_id":self.group_id,
-            "group_part":self.group_part,
-            "allocations":self.allocations,
-        }
+        pass
 
 @dataclass
 class UserType():
@@ -38,9 +32,15 @@ class UserType():
     current_project: ProjectType
     allocations: List[AllocationType]
     
+    def to_dict(self) -> Dict[str, Any]:
+        pass
+    
 @dataclass
 class AllocationType():
     id: UUID
     user: UserType
     project: ProjectType
     date: date
+    
+    def to_dict(self) -> Dict[str, Any]:
+        pass

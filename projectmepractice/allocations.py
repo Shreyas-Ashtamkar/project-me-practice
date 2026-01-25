@@ -18,6 +18,7 @@ def allocate_project_to_user(project:Project, user:User) -> Allocation:
         user=user,
         project=project,
     )
+    user.week_number += 1
     user.current_project = project
     user.save()
     return new_allocation

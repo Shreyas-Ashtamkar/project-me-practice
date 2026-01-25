@@ -36,6 +36,9 @@ class Project(Model):
         )
         return tags
     
+    def get_id(self):
+        return str(self.id)
+    
     def to_dict(self):
         return {
             "id": str(self.id),
@@ -76,7 +79,7 @@ class User(Model):
             "email": self.email,
             "created_on": self.created_on.isoformat(),
             "week_number": self.week_number,
-            "current_project": str(self.current_project) if self.current_project else ""
+            "current_project": self.current_project.to_dict() if self.current_project else {}
         }
     
     def __str__(self):
@@ -95,8 +98,8 @@ class Allocation(Model):
     def to_dict(self):
         return {
             "id": str(self.id),
-            "user": self.user,
-            "project": self.project,
+            "user": self.user.to_dict(),
+            "project": self.project.to_dict(),
             "date": self.date.isoformat()
         }
     
