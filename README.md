@@ -1,228 +1,194 @@
 # Projects Me Practice
 
-A personal coding practice system that automatically sends weekly coding challenges via email. Built for self-hosted deployment (ideal for Raspberry Pi or similar always-on servers), this application manages a bank of 500+ coding projects and intelligently allocates new challenges to registered users on a weekly schedule.
+A self-hosted system that sends weekly coding challenges via email. It maintains a project bank, allocates new projects per user without repeats, and sends HTML emails. Works great on always-on devices (e.g., Raspberry Pi) and standard Linux/macOS machines. Windows users can run via WSL or use Python directly.
 
 ## Features
 
-- **Project Bank Management**: Store and manage 500+ coding projects sourced from AI-generated content
-- **User Management**: Register users and track their progress through allocated projects
-- **Smart Allocation**: Intelligent project assignment that avoids duplicate allocations and respects project groupings/steps
-- **Automated Email Delivery**: Sends formatted HTML emails with project details and difficulty tags
-- **Scheduled Execution**: Built-in cron scheduling for weekly problem delivery (runs every Saturday at 7:30 AM by default)
-- **Flexible Configuration**: Environment-based configuration for email providers, sender details, and production modes
-- **CSV-Based Database**: Simple, file-based persistence for portability and easy backups
+- **Project Bank**: Import from CSV; supports grouped, multi-step projects.
+- **User Management**: Register users, track current project and week number.
+- **Smart Allocation**: Avoids duplicates; continues next step in a group.
+- **Automated Emails**: Uses `email_me_anything` with MailerSend or SMTP.
+- **Scheduling**: Cron-friendly wrapper with default weekly schedule.
+- **Config via .env**: Toggle prod/debug, mailer, sender info, AI.
+- **SQLite Database**: Uses Peewee ORM with CSV seeding on first run.
 
 ## Project Structure
 
 ```
 project-me-practice/
 ├── projectmepractice/           # Main package
-│   ├── __init__.py              # Entry point exports and logic
-│   ├── const.py                 # Database file constants
-│   ├── users.py                 # User registration and management
-│   ├── projects.py              # Project CRUD and selection logic
-│   └── practice.py              # Project allocation logic
-├── main.py                      # Application entry point
-├── requirements.txt             # Python dependencies
-├── 500ProjectsList.csv          # Source project bank (500+ projects)
-├── email-template.html          # HTML template for emails
-├── install.sh                   # Setup and initialization script
-├── run.sh                       # Execution wrapper with error handling
-└── schedule.sh                  # Cron job registration utility
+│   ├── __init__.py              # Public exports
+│   ├── const.py                 # Env + constants (mailer, flags)
+│   ├── db.py                    # Peewee models + init
+│   ├── users.py                 # User CRUD helpers
+│   ├── projects.py              # CSV seed + selection
+│   ├── allocations.py           # Allocation helpers
+│   ├── practice.py              # Allocation + email content
+│   └── types.py                 # Type aliases
+├── email-templates/
+│   ├── project.html             # Project email template
+│   └── welcome.html             # Welcome email template
+├── main.py                      # Batch run for subscribers
+├── onboarding.py                # First-time welcome + project
+├── example_projects.csv         # Sample seed CSV (columns below)
+├── prod.projects.db.csv         # Production seed CSV (optional)
+├── subscribed_users.db.csv      # Subscribers (name,email)
+├── db.sqlite3                   # SQLite database (generated)
+├── setup.sh                     # Setup: .env, venv, deps, init db
+├── run.sh                       # Wrapper to run main.py
+├── schedule.sh                  # Cron job registration
+├── requirements.txt             # Dependencies
+├── .env.template                # Copy to .env and fill
+└── debug-email.html             # Last rendered email (debug)
 ```
 
-## Data Models
+## Data Model (SQLite)
 
-### Projects Database (`projects.db.csv`)
-- **id**: Unique project identifier
-- **title**: Project name
-- **description**: Problem statement and requirements
-- **domain**: Technology domain (Web, Mobile, Data Science, etc.)
-- **duration**: Time to complete in weeks
-- **has_parts**: Boolean indicating if project has multi-step groups
-- **group_id**: ID for multi-part projects
-- **group_part**: Step number within a group
+- **Projects** (`Projects`)
+  - `id` (UUID, PK), `title`, `description`, `domain`, `duration` (weeks), `group_id` (nullable), `group_part` (nullable)
+- **Users** (`Users`)
+  - `id` (UUID, PK), `name`, `email` (unique), `created_on` (date), `week_number` (int), `is_active` (bool), `current_project` (FK nullable)
+- **Allocations** (`Allocations`)
+  - `id` (UUID, PK), `user` (FK), `project` (FK), `date` (date)
 
-### Users Database (`users.db.csv`)
-- **id**: Unique user UUID
-- **name**: User's display name
-- **email**: Contact email for problem delivery
-- **created_on**: ISO timestamp of registration
+CSV seed file columns (for `example_projects.csv` / `prod.projects.db.csv`):
+- `Project Idea`, `Description`, `Domain`, `Weeks`, `Group`, `Step`
 
-### Allocations Database (`allocations.db.csv`)
-- **id**: Unique allocation UUID
-- **project**: Allocated project ID
-- **user**: Recipient user ID
-- **date**: ISO timestamp of allocation
+Subscribers file (`subscribed_users.db.csv`):
+- Header: `name,email`
 
 ## Installation & Setup
 
 ### Prerequisites
 
-- Python 3.7+
-- Bash shell (Linux/macOS) or WSL (Windows)
-- Email service credentials (MailerSend recommended)
+- Python 3.10+ recommended
+- Bash shell (Linux/macOS) or WSL/Git Bash (Windows)
+- Email provider credentials (MailerSend API or SMTP)
 
 ### Quick Start
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd project-me-practice
-   ```
+1) Clone and enter the repo
+```bash
+git clone <repository-url>
+cd project-me-practice
+```
 
-2. **Run the installation script**
-   ```bash
-   chmod +x install.sh
-   ./install.sh
-   ```
-   
-   This script will:
-   - Verify Python 3 is installed
-   - Create a `.env` configuration file from `.env.template`
-   - Set up a Python virtual environment in `.venv`
-   - Create the virtual environment and install dependencies
+2) Run setup (creates `.env`, `.venv`, installs deps, initializes DB)
+```bash
+chmod +x setup.sh
+./setup.sh
+```
 
-3. **Configure environment variables**
-   
-   The installation script will prompt you for:
-   - **PROD_MODE**: Set to `true` to enable email sending (default: `false`)
-   - **MAILERSEND_API_KEY**: Your MailerSend API key (only needed if PROD_MODE=true)
-   - **EMAIL_SENDER_NAME**: Name displayed in emails (default: "Project Bot")
-   - **EMAIL_SENDER_EMAIL**: Sender email address (default: "no-reply@your-domain.com")
+3) Fill `.env` if prompted (minimal required):
+```
+PROD_MODE="false"
+EMAIL_SENDER_NAME="Project Bot"
+EMAIL_SENDER_ADDRESS="no-reply@your-domain.com"
+MAILER_CLIENT="mailersend"   # or "smtp"
+MAILERSEND_API_KEY="<your-key>"  # if using MailerSend
+AI_FEATURES_ENABLED="false"   # set true + OPENAI_API_KEY to enable
+```
 
-   Example `.env` file:
-   ```
-   PROD_MODE=true
-   MAILERSEND_API_KEY=your-mailersend-api-key-here
-   EMAIL_SENDER_NAME=Project Bot
-   EMAIL_SENDER_EMAIL=no-reply@your-domain.com
-   ```
+Windows without WSL: activate venv and run directly
+```powershell
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python .\main.py
+```
 
-### Running the Application
+## Running
 
-#### Single Execution (Debug Mode)
+Single run (uses `subscribed_users.db.csv`; writes `debug-email.html` when not in prod):
 ```bash
 ./run.sh
 ```
-This will:
-- Verify all dependencies are installed
-- Execute `main.py`
-- Log any errors to `fatal.log`
-- Generate `debug-email.html` if PROD_MODE is disabled
 
-#### Automated Weekly Delivery
+Schedule weekly (default: Saturday 7:30 AM):
+```bash
+chmod +x schedule.sh
+./schedule.sh --register
+```
 
-1. **Register the default cron job** (Saturday 7:30 AM)
-   ```bash
-   chmod +x schedule.sh
-   ./schedule.sh --register
-   ```
+Custom schedule (example: Monday 9 AM):
+```bash
+./schedule.sh --custom "0 9 * * 1"
+```
 
-2. **Use custom schedule** (if desired)
-   ```bash
-   ./schedule.sh --custom "0 9 * * 1"  # Every Monday at 9 AM
-   ```
-
-3. **View registered cron jobs**
-   ```bash
-   crontab -l
-   ```
-
-4. **Remove scheduling**
-   ```bash
-   ./schedule.sh --unregister
-   ```
-
-## Usage Examples
-
-### Direct Python Usage
+## Programmatic Usage
 
 ```python
 from projectmepractice import (
     feed_all_projects,
     register_user,
     allocate_next_project_for_user,
-    fetch_allocated_projects,
-    fetch_registered_users
+    fetch_all_projects,
+    build_html_content,
 )
 
-# Initialize project bank
-feed_all_projects("500ProjectsList.csv")
+# Seed projects from CSV (first run)
+feed_all_projects("example_projects.csv")  # or "prod.projects.db.csv"
 
-# Register a new user
-user = register_user("John Doe", "john@example.com")
+# Create or fetch a user
+user = register_user("Jane Doe", "jane@example.com")
 
-# Allocate next unassigned project
-project = allocate_next_project_for_user(user["id"])
+# Allocate next project (continues group steps when applicable)
+project = allocate_next_project_for_user(user)
 
-# View user's allocated projects
-allocated = fetch_allocated_projects(user_id=user["id"])
-
-# List all registered users
-all_users = fetch_registered_users()
+# Optional: render email HTML using the built-in template
+html = build_html_content(
+    template_path="email-templates/project.html",
+    data={
+        **project.to_dict(),
+        "recipient_name": user.name,
+        "sender_name": "Project Bot",
+        "current_week": str(user.week_number or 1),
+        "date": "January 01, 2026",
+    },
+    variable_map={"name": "title"},
+)
 ```
 
-### Managing Users
-
-```python
-from projectmepractice import modify_user_email, unregister_user
-
-# Update user email
-modify_user_email(user_id="uuid-here", new_email="newemail@example.com")
-
-# Delete a user
-unregister_user(user_id="uuid-here")
-```
+Additional helpers are available:
+- Users: `fetch_registered_users`, `modify_user_email`, `unregister_user` (import from `projectmepractice.users`)
+- Allocations: `fetch_allocated_projects`, `fetch_allocations` (import from `projectmepractice.allocations`)
 
 ## Email Configuration
 
-### Debug Mode (PROD_MODE=false)
-- Emails are written to `debug-email.html` instead of being sent
-- Useful for testing template rendering and content
+- **Debug (PROD_MODE="false")**: writes the last email to `debug-email.html`.
+- **Production (PROD_MODE="true")**: sends via `email_me_anything` using:
+  - `MAILER_CLIENT=mailersend` + `MAILERSEND_API_KEY`, or
+  - `MAILER_CLIENT=smtp` + `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`.
 
-### Production Mode (PROD_MODE=true)
-- Emails are sent via MailerSend API
-- Requires valid `MAILERSEND_API_KEY`
-- Check `fatal.log` for delivery errors
+Optional AI expansion (set `AI_FEATURES_ENABLED="true"` and `OPENAI_API_KEY`) augments the email with a concise AI-generated PRD fragment.
 
 ## Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
-| `python3 not found` | Install Python 3.7+ from python.org |
-| `.env not found` | Run `install.sh` again to regenerate |
-| `.venv not working` | Delete `.venv/` and run `install.sh` again |
-| Missing dependencies | Run `source .venv/bin/activate && pip install -r requirements.txt` |
-| Emails not sending | Verify `PROD_MODE=true` and valid `MAILERSEND_API_KEY` in `.env` |
-| Cron job not running | Verify with `crontab -l` and check system logs |
+- python3 not found: install Python 3.10+.
+- Missing .env or venv: run `./setup.sh`.
+- Packages missing: activate venv then `pip install -r requirements.txt`.
+- Emails not sending: check `PROD_MODE`, `MAILER_CLIENT` and credentials in `.env`.
+- Cron not running: `crontab -l` and system logs.
 
 ## Dependencies
 
-- **email_me_anything**: Email rendering and delivery service integration
+- email_me_anything
+- peewee
+- openai (only required if AI features are enabled)
 
-See [requirements.txt](requirements.txt) for complete dependency list.
-
-## Project Bank
-
-The primary project source is [500ProjectsList.csv](500ProjectsList.csv), containing 500+ coding challenges across multiple domains and difficulty levels, sourced from AI-generated content.
+See requirements.txt for exact versions.
 
 ## Notes
 
-- Projects are AI-generated and may vary in quality and originality
-- This is a personal project built for continuous learning and practice
-- No solutions are included; challenges are designed for self-study
-- Suitable for self-hosted deployment on always-on systems like Raspberry Pi
-- Check logs (`fatal.log`) for debugging issues
+- Projects and PRD expansion (if enabled) are AI-generated; validate before use.
+- SQLite database is created automatically; CSV files are for seeding and subscribers.
+- `run.sh` is Linux/macOS oriented; on Windows prefer WSL or run `python main.py` with an activated venv.
 
-## Future Improvements
+## Roadmap
 
-- Enhance project selection logic to consider project groups and steps more intelligently
-- Add user dashboard for progress tracking
-- Implement difficulty level selection
-- Add support for alternative email providers
-- Create web-based UI for user management
+- Difficulty selection and user preferences
+- Web UI for user management
+- Additional email providers and templates
 
 ## Contributing
 
-Found issues or have suggestions? Please report them via the Issues section.
+Found issues or have suggestions? Please open an issue or PR.
