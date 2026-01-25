@@ -59,6 +59,7 @@ class _data:
             # alloc["user_id"] = alloc["user"]["name"]
             # alloc["user"] = alloc["user"]["name"]
             allocations.append(alloc)
+        allocations.sort(key=lambda alloc:alloc["allocated_on"], reverse=True)
         return allocations
 
     def _get_user_objects(self):
@@ -104,14 +105,18 @@ dashboard_screen, users_screen, projects_screen, allocations_screen = st.tabs(["
 
 # selected_tab.
 with dashboard_screen:
-    st.subheader("Users")
-    st.dataframe(data.users, width="content")
-
     st.subheader("Project")
-    st.dataframe(data.projects, width="content")
-
-    st.subheader("Allocations")
-    st.dataframe(data.allocations, width="content")
+    st.dataframe(data.projects)
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.subheader("Allocations")
+        st.dataframe(data.allocations)
+    
+    with col2:
+        st.subheader("Users")
+        st.dataframe(data.users)
 
 with users_screen:
     if not user:
